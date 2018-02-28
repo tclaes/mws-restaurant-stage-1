@@ -37,7 +37,6 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 #maincontent {
   background-color: #f3f3f3;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -70,18 +69,6 @@ nav h1 a {
   letter-spacing: 10px;
   text-transform: uppercase;
 }
-
-@media screen and (min-width:600px){
-  #breadcrumb {
-    padding: 10px 40px 16px;
-    list-style: none;
-    background-color: #eee;
-    font-size: 17px;
-    margin: 0;
-    width: calc(50% - 80px);
-}
-}
-
 
 /* Display list items side by side */
 #breadcrumb li {
@@ -250,32 +237,6 @@ nav h1 a {
 }
 
 /* ====================== Restaurant Details ====================== */
-@media screen and (min-width:600px){
-  .inside header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  .inside #map-container {
-    background: blue none repeat scroll 0 0;
-    height: 87%;
-    position: fixed;
-    right: 0;
-    top: 80px;
-    width: 50%;
-  }
-  .inside #map {
-    background-color: #ccc;
-    height: 100%;
-    width: 100%;
-  }
-}
-.inside #footer {
-  bottom: 0;
-  position: absolute;
-  width: 50%;
-}
 
 @media screen and (max-width: 900px) {
   .inside #footer {
@@ -313,21 +274,13 @@ nav h1 a {
   text-transform: uppercase;
 	width: 90%;
 }
-
-#restaurant-container, #reviews-container {
-  border-bottom: 1px solid #d9d9d9;
-  border-top: 1px solid #fff;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-}
-
-@media screen and (min-width: 900px){
+@media screen and (max-width: 899px ) {
   #restaurant-container, #reviews-container {
-    padding: 140px 40px 30px;
-    width: 50%;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
