@@ -3,7 +3,7 @@
 
 body,td,th,p{
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
+	font-size: 1rem;
 	color: #333;
 	line-height: 1.5;
 }
@@ -38,6 +38,8 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 #maincontent {
   background-color: #f3f3f3;
   min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 #footer {
   background-color: #444;
@@ -54,6 +56,9 @@ nav {
   height: 80px;
   background-color: #252831;
   text-align:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 nav h1 {
   margin: auto;
@@ -105,18 +110,22 @@ nav h1 a {
 }
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
+  display: flex;
   width: 100%;
-  height: 50px;
   background-color: #3397DB;
+  flex-grow:1;
+  flex-direction: column;
   align-items: center;
 }
+
 .filter-options h2 {
   color: white;
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: normal;
   line-height: 1;
-  margin: 0 20px;
+  margin: 10px 20px;
 }
+
 .filter-options select {
   background-color: white;
   border: 1px solid #fff;
@@ -129,6 +138,42 @@ nav h1 a {
   width: 200px;
 }
 
+@media screen and (max-width: 500px){
+  .filter-options h2 {
+    font-size: 1.3rem;
+    font-weight: 100;
+  }
+}
+
+@media screen and (min-width: 501px) and (max-width:900px){
+
+  .filter-options h2 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  .filter-options select {
+    min-width: 450px;
+    border: 1px solid black;
+  }
+}
+
+@media screen and (min-width: 901px){
+
+  .filter-options {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .filter-options h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .filter-options select {
+    min-width: 300px;
+    border: 1px solid black;
+  }
+}
+
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
   background-color: #f3f3f3;
@@ -136,6 +181,9 @@ nav h1 a {
   margin: 0;
   padding: 30px 15px 60px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 #restaurants-list li {
   background-color: #fff;
@@ -180,6 +228,15 @@ nav h1 a {
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+@media screen and (min-width: 780px){
+  #restaurants-list{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
 }
 
 /* ====================== Restaurant Details ====================== */
