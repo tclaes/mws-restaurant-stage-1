@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* CSS Document */
+
+    .inside header {
+        grid-area: head;
+    }
+
+    .inside #maincontent {
+        grid-area: maincontent;
+        overflow: auto;
+    }
+
+    .inside footer {
+        grid-area: foot;
+    }
+
+    .inside #map-container {
+        grid-area: map-container;
+        background: black;
+        overflow: hidden;
+    }
+
+    .inside {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+                "head head"
+                "maincontent map-container "
+                "foot map-container";
+        height: 100vh;
+    }
+
+    #map {
+        height: 100vh;
+    }
+
+    #breadcrumb {
+        padding: 10px 40px 16px;
+        list-style: none;
+        background-color: #eee;
+        font-size: 17px;
+        margin: 0;
+    }
+
+    #restaurant-container {
+        margin: 0 auto;
+    }
+
+    #restaurant-img {
+        width: 100%;
+    }
+
+#restaurant-cuisine {
+    width: 100%;
+}
+
+
+
+
