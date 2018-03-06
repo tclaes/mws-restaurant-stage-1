@@ -42,7 +42,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 #footer {
   background-color: #444;
-  color: #aaa;
+  color: white;
   font-size: 8pt;
   letter-spacing: 1px;
   padding: 25px;
@@ -103,7 +103,7 @@ nav h1 a {
 .filter-options {
   display: flex;
   width: 100%;
-  background-color: #3397DB;
+  background-color: #01447e;
   flex-grow:1;
   flex-direction: column;
   align-items: center;
@@ -127,6 +127,10 @@ nav h1 a {
   margin: 10px;
   padding: 0 10px;
   width: 200px;
+}
+
+.filter-options select:focus {
+  box-shadow: 0 0 5px 5px rgba(255, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 450px){
@@ -195,7 +199,7 @@ nav h1 a {
   min-width: 100%;
 }
 #restaurants-list li h1 {
-  color: #f18200;
+  color: #01447E;
   font-family: Arial,sans-serif;
   font-size: 14pt;
   font-weight: 200;
@@ -209,8 +213,8 @@ nav h1 a {
   font-size: 11pt;
 }
 #restaurants-list li a {
-  background-color: orange;
-  border-bottom: 3px solid #eee;
+  background-color: #01447E;
+  border-bottom: 3px solid orange;
   color: #fff;
   display: inline-block;
   font-size: 10pt;
@@ -218,6 +222,19 @@ nav h1 a {
   padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
+  text-transform: uppercase;
+}
+
+#restaurants-list li a:focus {
+  background-color: orange;
+  border-bottom: 3px solid #01447E;
+  color: #fff;
+  display: inline-block;
+  font-size: 10pt;
+  margin: 15px 0 0;
+  padding: 8px 30px 10px;
+  text-align: center;
+  text-decoration: underline;
   text-transform: uppercase;
 }
 

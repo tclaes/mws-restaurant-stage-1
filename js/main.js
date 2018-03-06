@@ -1,8 +1,8 @@
 let restaurants,
   neighborhoods,
-  cuisines
-var map
-var markers = []
+  cuisines;
+let map;
+let markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -80,8 +80,14 @@ window.initMap = () => {
     center: loc,
     scrollwheel: false
   });
+  self.map.addListener('tilesloaded', setMapTitle);
   updateRestaurants();
 }
+
+setMapTitle = () => {
+    const mapFrame = document.querySelector('#map').querySelector('iframe');
+    mapFrame.setAttribute('title', 'Google maps with restaurant location');
+};
 
 /**
  * Update page and map for current restaurants.
