@@ -34,7 +34,17 @@
       <ul id="restaurants-list"></ul>
     </section>
   </main>
-
+  <script>
+      if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function () {
+              navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                  console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              }, function (err) {
+                  console.log('ServiceWorker registration failed: ', err);
+              });
+          });
+      }
+  </script>
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap"></script>
