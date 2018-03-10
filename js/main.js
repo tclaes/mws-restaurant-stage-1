@@ -152,7 +152,7 @@ createRestaurantHTML = (restaurant) => {
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.srcset = DBHelper.imageSrcsetForRestaurant(restaurant);
-  image.alt = restaurant.name + " in: " + restaurant.neighborhood;
+  image.alt = "An image of " + restaurant.name + " in " + restaurant.neighborhood;
   li.append(image);
 
   const name = document.createElement('h1');
@@ -160,7 +160,7 @@ createRestaurantHTML = (restaurant) => {
   li.append(name);
 
   const neighborhood = document.createElement('p');
-  neighborhood.innerHTML = restaurant.neighborhood.location;
+  neighborhood.innerHTML = restaurant.neighborhood;
   li.append(neighborhood);
 
   const address = document.createElement('p');
