@@ -10,10 +10,6 @@
         overflow: auto;
     }
 
-    .inside footer {
-        grid-area: foot;
-    }
-
     .inside #map-container {
         grid-area: map-container;
         background: black;
@@ -26,8 +22,7 @@
         grid-template-rows: auto 1fr auto;
         grid-template-areas:
                 "head head"
-                "maincontent map-container "
-                "foot map-container";
+                "maincontent map-container ";
         height: 100vh;
     }
 
