@@ -140,14 +140,14 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/images/${restaurant.photographs[1]}`);
+    return (`/images/${restaurant.id}-small_small.jpg`);
   }
 
     /**
    * Restaurant image srcset.
    */
   static imageSrcsetForRestaurant(restaurant) {
-    return (`/images/${restaurant.photographs[1]} 400w, /images/${restaurant.photographs[0]} 900w`);
+    return (`/images/${restaurant.id}-small_small.jpg 400w, /images/${restaurant.id}-large_large.jpg 900w`);
   }
 
   /**
