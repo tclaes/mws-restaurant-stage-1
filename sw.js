@@ -46,7 +46,7 @@ self.addEventListener('install', function(event) {
                 if (/\.jpg$|.png$/.test(event.request.url)) {
 
                     let req = event.request.clone();
-                    if(!req.url.indexOf("-large") == -1){
+                    if(!req.url.indexOf("-large") === -1){
                         console.log("Small image loaded");
                         let returnUrl = req.url.substr(0,req.url.indexOf("-large")) + "-small_small.jpg";
                         return caches.match(returnUrl);
