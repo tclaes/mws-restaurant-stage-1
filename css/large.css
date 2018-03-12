@@ -27,7 +27,7 @@
     }
 
     .inside #map {
-        height: 100vh;
+        min-height: 100%;
     }
 
     #breadcrumb {
@@ -46,9 +46,9 @@
         width: 100%;
     }
 
-#restaurant-cuisine {
-    width: 100%;
-}
+    #restaurant-cuisine {
+        width: 100%;
+    }
 
 
 

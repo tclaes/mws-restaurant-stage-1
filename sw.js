@@ -35,14 +35,24 @@ self.addEventListener('install', function(event) {
 });
 
     self.addEventListener('fetch', function(event) {
-        console.log('Fetch event for ', event.request.url);
+        // console.log('Fetch event for ', event.request.url);
         event.respondWith(
+
             caches.match(event.request).then(function(response) {
                 if (response) {
-                    console.log('Found ', event.request.url, ' in cache');
+                    // console.log('Found ', event.request.url, ' in cache');
                     return response;
                 }
-                console.log('Network request for ', event.request.url);
+                if (/\.jpg$|.png$/.test(event.request.url)) {
+
+                    let req = event.request.clone();
+                    if(!req.url.indexOf("-large") === -1){
+                        console.log("Small image loaded");
+                        let returnUrl = req.url.substr(0,req.url.indexOf("-large")) + "-small_small.jpg";
+                        return caches.match(returnUrl);
+                    }
+                }
+                // console.log('Network request for ', event.request.url);
                 return fetch(event.request).then(function(response) {
                     if (response.status === 404) {
                         return caches.match('pages/404.html');
@@ -55,7 +65,10 @@ self.addEventListener('install', function(event) {
                     });
                 });
             }).catch(function(error) {
-                console.log('Error, ', error);
+                // console.log('Error, ', error);
+
+
+
                 return caches.match('pages/offline.html');
             })
         );
