@@ -25,10 +25,10 @@
   </header>
   <!-- End header -->
   <!-- Beginning main -->
-  <main id="maincontent">
+  <main id="maincontent" role="main">
     <!-- Beginning breadcrumb -->
 
-      <ul id="breadcrumb" aria-label="Breadcrumb">
+      <ul id="breadcrumb" aria-label="Breadcrumb" role="navigation">
         <li>
           <a href="/index.html">Home</a>
         </li>
@@ -67,6 +67,16 @@
   <!-- End footer -->
 
   <!-- Beginning scripts -->
+  <script>
+      if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('sw.js')
+              .then(function (registration) {
+                  console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              }, function (err) {
+                  console.log('ServiceWorker registration failed: ', err);
+              });
+      }
+  </script>
   <!-- Database helpers -->
   <script type="text/javascript" src="js/dbhelper.js"></script>
   <!-- Main javascript file -->
