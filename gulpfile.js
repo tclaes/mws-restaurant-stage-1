@@ -1,10 +1,10 @@
 /* file: gulpfile.js */
 
 var gulp   = require('gulp'),
-    jshint = require('gulp-jshint'),
     sass   = require('gulp-sass'),
     browserSync = require('browser-sync').create(),
-    eslint = require('gulp-eslint');
+    eslint = require('gulp-eslint'),
+    babel = require('gulp-babel');
 
 // Browsersync
 browserSync.init({
