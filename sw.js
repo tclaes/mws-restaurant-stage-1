@@ -1,3 +1,5 @@
+import idb from 'idb';
+
 (function() {
     'use strict';
 
@@ -5,13 +7,12 @@ var filesToCache = [
     '.',
     'index.html',
     'restaurant.html',
-    'css/styles.css',
+    'css/styles.scss',
     'js/dbhelper.js',
     'js/main.js',
     'js/restaurant_info.js',
-    'data/restaurants.json',
-    'images/1-small_small.jpg',
     'images/2-small_small.jpg',
+    'images/1-small_small.jpg',
     'images/3-small_small.jpg',
     'images/4-small_small.jpg',
     'images/5-small_small.jpg',
@@ -27,6 +28,7 @@ var staticCacheName = 'restaurant-cache';
 self.addEventListener('install', function(event) {
     console.log('Attempting to install service worker and cache static assets');
     event.waitUntil(
+
         caches.open(staticCacheName)
             .then(function(cache) {
                 return cache.addAll(filesToCache);
