@@ -17,6 +17,7 @@
     "eslint": "^4.18.2",
     "eslint-config-google": "^0.9.1",
     "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.2",
     "gulp-jshint": "^2.1.0",
     "gulp-ruby-sass": "^3.0.0",
     "gulp-util": "^3.0.8",

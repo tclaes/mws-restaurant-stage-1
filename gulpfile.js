@@ -2,21 +2,21 @@
 
 var gulp   = require('gulp'),
     jshint = require('gulp-jshint'),
-    sass   = require('gulp-sass');
+    sass   = require('gulp-sass'),
+    browserSync = require('browser-sync').create(),
+    eslint = require('gulp-eslint');
 
-// define the default task and add the watch task to it
-gulp.task('default', ['watch']);
-
-// configure the jshint task
-gulp.task('jshint', function() {
-    return gulp.src('source/javascript/**/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'));
+// Browsersync
+browserSync.init({
+    server: "./app"
 });
 
-// configure which files to watch and what tasks to use on file changes
-gulp.task('watch', function() {
-    gulp.watch('source/javascript/**/*.js', ['jshint']);
+browserSync.stream();
+
+// define the default task and add the watch task to it
+gulp.task('default', ['build-css','lint'], function(){
+    gulp.watch('source/scss/**/*.scss', ['build-css']);
+    gulp.watch('js/**/*.js',['lint']);
 });
 
 gulp.task('build-css', function() {
@@ -25,9 +25,19 @@ gulp.task('build-css', function() {
         .pipe(gulp.dest('app/styles'));
 });
 
-/* updated watch task to include sass */
-
-gulp.task('watch', function() {
-    gulp.watch('source/js/**/*.js', ['jshint']);
-    gulp.watch('source/scss/**/*.scss', ['build-css']);
+gulp.task('lint', () => {
+    // ESLint ignores files with "node_modules" paths.
+    // So, it's best to have gulp ignore the directory as well.
+    // Also, Be sure to return the stream from the task;
+    // Otherwise, the task may end before the stream has finished.
+    return gulp.src(['js/**/*.js','!node_modules/**'])
+    // eslint() attaches the lint output to the "eslint" property
+    // of the file object so it can be used by other modules.
+        .pipe(eslint())
+        // eslint.format() outputs the lint results to the console.
+        // Alternatively use eslint.formatEach() (see Docs).
+        .pipe(eslint.format())
+        // To have the process exit with an error code (1) on
+        // lint error, return the stream and pipe to failAfterError last.
+        .pipe(eslint.failAfterError());
 });
