@@ -5,21 +5,20 @@ var filesToCache = [
     '.',
     'index.html',
     'restaurant.html',
-    'scss/styles.scss',
+    'css/styles.css',
     'js/dbhelper.js',
     'js/main.js',
     'js/restaurant_info.js',
-    'data/restaurants.json',
-    'images/1-small_small.jpg',
-    'images/2-small_small.jpg',
-    'images/3-small_small.jpg',
-    'images/4-small_small.jpg',
-    'images/5-small_small.jpg',
-    'images/6-small_small.jpg',
-    'images/7-small_small.jpg',
-    'images/8-small_small.jpg',
-    'images/9-small_small.jpg',
-    'images/10-small_small.jpg'
+    'images/1.jpg',
+    'images/2.jpg',
+    'images/3.jpg',
+    'images/4.jpg',
+    'images/5.jpg',
+    'images/6.jpg',
+    'images/7.jpg',
+    'images/8.jpg',
+    'images/9.jpg',
+    'images/10.jpg'
 ];
 
 var staticCacheName = 'restaurant-cache';

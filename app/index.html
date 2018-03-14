@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <!--build:css css/styles.min.css-->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" media="screen and (min-width: 900px)" href="css/large.css">
+  <!--endbuild-->
   <title>Restaurant Reviews</title>
 </head>
 
@@ -34,6 +36,7 @@
       <ul id="restaurants-list"></ul>
     </section>
   </main>
+
   <script>
       if ('serviceWorker' in navigator) {
               navigator.serviceWorker.register('sw.js')
@@ -44,8 +47,10 @@
               });
       }
   </script>
+  <!--build:js js/main.min.js -->
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <!-- endbuild -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap"></script>
 
 

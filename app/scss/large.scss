@@ -1,21 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
 
-    .inside header {
-        grid-area: head;
-    }
-
-    .inside #maincontent {
-        grid-area: maincontent;
-        overflow: auto;
-    }
-
-    .inside #map-container {
-        grid-area: map-container;
-        background: black;
-        overflow: hidden;
-    }
-
     .inside {
         display: grid;
         grid-template-columns: 60% 40%;
@@ -24,10 +9,25 @@
                 "head head"
                 "maincontent map-container ";
         height: 100vh;
-    }
 
-    .inside #map {
-        min-height: 100%;
+        header {
+            grid-area: head;
+        }
+
+        #maincontent {
+            grid-area: maincontent;
+            overflow: auto;
+        }
+
+        #map-container {
+            grid-area: map-container;
+            background: black;
+            overflow: hidden;
+        }
+
+        #map {
+            min-height: 100%;
+        }
     }
 
     #breadcrumb {
