@@ -34,16 +34,6 @@
     </section>
   </main>
 
-  <script>
-      if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('sw.js')
-                  .then(function (registration) {
-                  console.log('ServiceWorker registration successful with scope: ', registration.scope);
-              }, function (err) {
-                  console.log('ServiceWorker registration failed: ', err);
-              });
-      }
-  </script>
   <script src="js/main.min.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap"></script>
 
