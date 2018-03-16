@@ -24,8 +24,8 @@ self.addEventListener('push', (event) => {
 
 workbox.precaching.precacheAndRoute([
   {
-    "url": "css/styles.min.css",
-    "revision": "3da42d5d637b86285a3983fe8024dab2"
+    "url": "css/main.css",
+    "revision": "66a91550a5744eaef066b427d08fce84"
   },
   {
     "url": "images/1.jpg",
@@ -69,14 +69,14 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "9e41d3e7546365e7306d282faf032940"
+    "revision": "fecea3fb20dcdca84a531b0b351ee860"
   },
   {
     "url": "js/main.min.js",
-    "revision": "46d299d26c74ef50a29c5086ce5885fe"
+    "revision": "59cd4ceed0a7cc97afcb96712f491cd6"
   },
   {
     "url": "restaurant.html",
-    "revision": "dd81999691dc64333b2e65645580b9c0"
+    "revision": "e13e419f53a6fbe939f1374a86da91d6"
   }
 ]);

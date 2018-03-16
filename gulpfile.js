@@ -6,16 +6,17 @@ const gulp   = require('gulp'),
     eslint = require('gulp-eslint');
 const babel = require('gulp-babel');
 const imagemin = require('gulp-imagemin');
-const pngquant = require('imagemin-pngquant');
+const webp = require('gulp-webp');
 const autoprefixer = require('gulp-autoprefixer');
 const useref = require('gulp-useref');
 const uglify = require('gulp-uglify');
 const gulpIf = require('gulp-if');
-const cssnano = require('gulp-cssnano');
 const cache = require('gulp-cache');
 const workbox = require('workbox-build');
 const runSequence = require('run-sequence');
 const del = require('del');
+const minify = require('gulp-babel-minify');
+const minifyHtml = require('gulp-htmlmin');
 const src = 'app';
 const dist = 'dist';
 
@@ -24,37 +25,63 @@ gulp.task('default', (callback) => {
     runSequence('clean', 'watch', 'generate-service-worker',callback);
 });
 
-gulp.task('watch',['browserSync','build-scss','useref','image-min'], ()=>{
-    gulp.watch('app/scss/**/*.scss', ['build-scss']);
-    gulp.watch('app/*.html', browserSync.reload);
-    gulp.watch('app/js/**/*.js', ['useref']);
-    gulp.watch('app/js/**/*.js', browserSync.reload);
+gulp.task('watch',['browserSync','build-css','scripts','image-min'], ()=>{
+    gulp.watch('app/scss/**/*.scss', ['build-css'], browserSync.reload);
+    gulp.watch('app/*.html',['copy-html'], browserSync.reload);
+    gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['image-min'], browserSync.reload);
+    gulp.watch('app/js/**/*.js', ['sripts'], browserSync.reload);
+});
 
-
+gulp.task('serve',['browserSync','build-css','scripts-dist','image-min', 'generate-service-worker'], ()=>{
+    gulp.watch('app/scss/**/*.scss', ['build-css'], browserSync.reload);
+    gulp.watch('app/*.html',['minify-html'], browserSync.reload);
+    gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['image-min'], browserSync.reload);
+    gulp.watch('app/js/**/*.js', ['scipts'], browserSync.reload);
 });
 
 // Browsersync
-gulp.task('browserSync', function(){
+gulp.task('browserSync',() =>{
     browserSync.init({
         server: './dist'
     });
 });
 
-gulp.task('build-scss', function() {
+gulp.task('build-css', () => {
     return gulp.src('app/scss/**/*.scss')
-        .pipe(sass())
+        .pipe(sass({outputStyle:'compressed'}).on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
         }))
-        .pipe(gulp.dest('app/css'))
+        .pipe(gulp.dest('dist/css'))
         .pipe(browserSync.reload({
             stream: true
         }));
 });
 
-gulp.task('image-min', function () {
-    return gulp.src('app/img/**/*.+(jpg|jpeg|png|gif|svg)')
+gulp.task('copy-html', () =>{
+    gulp.src('./app/**/*.html')
+        .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('minify-html', () =>{
+    gulp.src('./app/**/*.html')
+        .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('webp', () =>
+    gulp.src('app/img/**/*.+(jpg|jpeg|png|gif|svg)')
+        .pipe(webp({
+            use: [
+                imageminWebp({quality: 20})
+            ]
+        }))
+        .pipe(gulp.dest('app/img'))
+);
+
+gulp.task('image-min',() => {
+    return gulp.src('app/img/**/*.+(jpg|jpeg|png|gif|svg|webp)')
         .pipe(cache(imagemin({
             progressive: true,
             interlaced: true
@@ -80,14 +107,24 @@ gulp.task('lint', () => {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('useref', ()=>{
+
+gulp.task('scripts', ()=>{
     return gulp.src('app/*.html')
         .pipe(useref())
         .pipe(gulpIf('*.js',babel({
             presets: browserSync['env']
         })))
-        //.pipe(gulpIf('*.js', uglify()))
-        .pipe(gulpIf('*.css', cssnano()))
+        .pipe(gulp.dest('dist'))
+});
+
+gulp.task('scripts-dist', ()=>{
+    return gulp.src('app/*.html')
+        .pipe(useref())
+        .pipe(gulpIf('*.js',minify({
+            mangle: {
+                keepClassName: true
+            }
+        })))
         .pipe(gulp.dest('dist'))
 });
 
