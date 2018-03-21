@@ -7,6 +7,8 @@
   <meta name="theme-color" content="#317EFB"/>
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/medium.css" media="screen and (min-width: 600px)">
+  <link rel="stylesheet" href="css/large.css" media="screen and (min-width: 901px)">
   <title>Restaurant Reviews</title>
 </head>
 
@@ -35,9 +37,23 @@
     </section>
   </main>
 
+  <script>
+
+      if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').then(registration => {
+                  console.log('SW registered: ', registration);
+                  //registration.pushManager.subscribe({userVisibleOnly: true});
+              }).catch(registrationError => {
+                  console.log('SW registration failed: ', registrationError);
+              });
+          });
+      }
+
+  </script>
   <!--build:js js/main.min.js -->
-  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <script async type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
+  <script async type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <!-- endbuild -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap"></script>
 

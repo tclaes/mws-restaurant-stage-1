@@ -9,16 +9,7 @@ var markers = [];
  */
 
 function init() {
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').then(registration => {
-                console.log('SW registered: ', registration);
-                //registration.pushManager.subscribe({userVisibleOnly: true});
-            }).catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-        });
-    }
+
 
     const observer = new IntersectionObserver(entries => {/* … */}, {
         // The root to use for intersection.
@@ -178,20 +169,21 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
-  const picture = document.createElement('picture');
-
-  const source = document.createElement('source');
-  source.className = 'restaurant-img';
-  source.srcset = DBHelper.imageWebpUrlForRestaurant(restaurant);
-  picture.append(source);
+  // const picture = document.createElement('picture');
+  //
+  // const source = document.createElement('source');
+  // source.className = 'restaurant-img';
+  // source.media = ()
+  // source.srcset = DBHelper.imageWebpUrlForRestaurant(restaurant);
+  // picture.append(source);
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.srcset = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = "An image of restaurant " + restaurant.name + " in " + restaurant.neighborhood;
-  picture.append(image);
+  li.append(image);
 
-  li.append(picture);
+  // li.append(picture);
 
   const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
