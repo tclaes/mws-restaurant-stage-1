@@ -10,7 +10,6 @@ const pngquant = require('imagemin-pngquant');
 const webp = require('gulp-webp');
 const autoprefixer = require('gulp-autoprefixer');
 const useref = require('gulp-useref');
-// const uglify = require('gulp-uglify');
 const gulpIf = require('gulp-if');
 const cache = require('gulp-cache');
 const workbox = require('workbox-build');
@@ -30,6 +29,7 @@ gulp.task('default',[
     'copy-html',
     'image-min',
     'scripts'], ()=>{
+    runSequence('generate-service-worker');
     gulp.watch('app/scss/**/*.scss', ['build-css'], browserSync.reload);
     gulp.watch('app/*.html',['copy-html'], browserSync.reload);
     gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['image-min'], browserSync.reload);
@@ -138,7 +138,7 @@ gulp.task('scripts-dist', ()=>{
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('generate-service-worker', () => {
+gulp.task('generate-service-worker', ['generate-manifest'], () => {
     return workbox.injectManifest({
         globDirectory: dist,
         globPatterns: [
@@ -156,6 +156,11 @@ gulp.task('generate-service-worker', () => {
         console.warn('Service worker generation failed:', error);
     });
 });
+
+gulp.task('generate-manifest',() => {
+    gulp.src('./app/**/*.json')
+        .pipe(gulp.dest('./dist'))
+})
 
 gulp.task('clean', () => {
     return del(dist);
