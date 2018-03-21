@@ -1,0 +1,37 @@
+@media screen and (min-width: 780px) {
+  #restaurants-list {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center; } }
+
+@media screen and (max-width: 899px) {
+  #restaurant-container, #reviews-container {
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+  .inside #footer {
+    width: 100%;
+    padding: 25px 0; } }
+
+@media screen and (min-width: 451px) and (max-width: 900px) {
+  .filter-options h2 {
+    font-size: 2rem;
+    font-weight: bold; }
+  .filter-options select {
+    min-width: 350px;
+    border: 1px solid black; } }
