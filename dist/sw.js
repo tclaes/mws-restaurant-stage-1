@@ -29,11 +29,11 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "css/main.css",
-    "revision": "5372545d6cb2c8f4dd57a360d3e899e2"
+    "revision": "7198c5c830e68f0b3e634d9ec8187008"
   },
   {
     "url": "css/medium.css",
-    "revision": "bfb9374c92de1a2d1f9eb6f13cb18fe5"
+    "revision": "9e1bdce711a38e1cab6935a50d810857"
   },
   {
     "url": "images/1-large_large.jpg",
@@ -157,15 +157,15 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "823608c6ae91579667ab9c87df3d5c23"
+    "revision": "502d3bb2203566ddf6877ad6ee1773bd"
   },
   {
     "url": "js/dbhelper.js",
-    "revision": "8fc87a61a366f85140c2d472ee3f7a3a"
+    "revision": "a18497d78ab8c9e7a5a41ed9950d4c5e"
   },
   {
     "url": "js/main.js",
-    "revision": "7e3390780c5cdd122aa7e1fbf5dbabce"
+    "revision": "9373875a6a40375bf4ab6193bd78d55e"
   },
   {
     "url": "js/restaurant_info.js",
@@ -173,6 +173,6 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "restaurant.html",
-    "revision": "97b8a4737fd76406f0ca228caae6a13f"
+    "revision": "c6dd18325fc3471ccb67f22478786533"
   }
 ]);

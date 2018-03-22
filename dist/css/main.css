@@ -19,7 +19,7 @@ a {
   color: orange;
   text-decoration: none; }
   a img {
-    border: none 0px #fff; }
+    border: none 0 #fff; }
 
 a:hover, a:focus {
   color: #3397db;

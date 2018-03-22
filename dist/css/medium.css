@@ -10,7 +10,13 @@
     -ms-flex-pack: center;
     justify-content: center; } }
 
-@media screen and (max-width: 899px) {
+@media screen and (max-width: 900px) {
+  .filter-options h2 {
+    font-size: 2rem;
+    font-weight: bold; }
+  .filter-options select {
+    min-width: 350px;
+    border: 1px solid black; }
   #restaurant-container, #reviews-container {
     border-bottom: 1px solid #d9d9d9;
     border-top: 1px solid #fff;
@@ -27,11 +33,3 @@
   .inside #footer {
     width: 100%;
     padding: 25px 0; } }
-
-@media screen and (min-width: 451px) and (max-width: 900px) {
-  .filter-options h2 {
-    font-size: 2rem;
-    font-weight: bold; }
-  .filter-options select {
-    min-width: 350px;
-    border: 1px solid black; } }

@@ -22,7 +22,6 @@ const dist = 'dist';
 const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('default',[
-    'clean',
     'browserSync',
     'lint',
     'build-css',
