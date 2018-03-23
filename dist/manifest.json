@@ -1,8 +1,0 @@
-{
-  "name": "Restaurant Review",
-  "short_name": "res_review",
-  "theme_color": "#444444",
-  "display": "browser",
-  "scope": "/",
-  "start_url": "/"
-}

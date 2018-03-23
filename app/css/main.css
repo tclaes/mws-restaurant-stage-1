@@ -239,3 +239,9 @@ nav {
 
 #restaurant-hours td {
   color: #666; }
+
+/**
+*Lazy loading
+**/
+img:not([src]):not([srcset]) {
+  visibility: hidden; }
