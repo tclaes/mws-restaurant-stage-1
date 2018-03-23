@@ -28,7 +28,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        const restaurant = restaurants.find(r => r.id === id);
+        const restaurant = restaurants.find(r => r.id == id);
         if (restaurant) {
           // Got the restaurant
           callback(null, restaurant);
@@ -106,6 +106,7 @@ class DBHelper {
       } else {
         // Get all neighborhoods from all restaurants
         const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
+        console.log(neighborhoods);
         // Remove duplicates from neighborhoods
         const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
         callback(null, uniqueNeighborhoods);

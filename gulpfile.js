@@ -21,33 +21,34 @@ const src = 'app';
 const dist = 'dist';
 const sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('default',[
-    'browserSync',
-    'lint',
-    'build-css',
-    'copy-html',
-    'image-min',
-    'scripts'], ()=>{
-    runSequence('generate-service-worker');
+gulp.task('default', ()=>{
+    runSequence([
+        'browserSync',
+        'lint',
+        'build-css',
+        'copy-html',
+        'image-min',
+        'lazyLoad',
+        'scripts'],'generate-service-worker');
     gulp.watch('app/scss/**/*.scss', ['build-css'], browserSync.reload);
     gulp.watch('app/*.html',['copy-html'], browserSync.reload);
     gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['image-min'], browserSync.reload);
     gulp.watch('app/js/**/*.js', ['scripts'], browserSync.reload);
 });
 
-gulp.task('serve',[
-    'clean',
-    'lint',
-    'build-css',
-    'image-min',
-    'scripts-dist'], ()=>{
-    runSequence('generate-service-worker');
+gulp.task('serve', ()=>{
+    runSequence('clean',[
+        'lint',
+        'build-css',
+        'image-min',
+        'lazyLoad',
+        'scripts-dist'] ,'generate-service-worker');
 });
 
 // Browsersync
 gulp.task('browserSync',() =>{
     browserSync.init({
-        server: './dist'
+        server: './dist',
     });
 });
 
@@ -64,6 +65,11 @@ gulp.task('build-css', () => {
 gulp.task('copy-html', () =>{
     gulp.src('./app/**/*.html')
         .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('lazyLoad', () =>{
+    gulp.src('./app/js/lazyload.min.js')
+        .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('minify-html', () =>{
