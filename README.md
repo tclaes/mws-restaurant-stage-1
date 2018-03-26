@@ -6,9 +6,9 @@
 
 If you haven't install node.js
 
-$ install -g lite-server
+$ for development run gulp
 
-$ lite-server (in project folder)
+$ for deployment run gulp build
 
 ### Note about ES6
 
@@ -25,5 +25,5 @@ images are resized with grunt to appropriate sizes
 
 ### data loading
 
-data is loaded via dbhelper.js and data/restaurants.json
+data is loaded via server running on port 1337
 

@@ -1,12 +1,10 @@
-let restaurants,
-  neighborhoods,
-  cuisines;
+let restaurants, neighborhoods, cuisines;
 var markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', event => {
   fetchNeighborhoods();
   fetchCuisines();
   lazyLoad();
@@ -16,14 +14,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
  * LazyLoading images on init
  */
 
-lazyLoad = () => new LazyLoad ();
+lazyLoad = () => new LazyLoad();
 
 /**
  * Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-    if (error) { // Got an error
+    if (error) {
+      // Got an error
       console.error(error);
     } else {
       self.neighborhoods = neighborhoods;
@@ -43,21 +42,22 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
     option.value = neighborhood;
     select.append(option);
   });
-}
+};
 
 /**
  * Fetch all cuisines and set their HTML.
  */
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
-    if (error) { // Got an error!
+    if (error) {
+      // Got an error!
       console.error(error);
     } else {
       self.cuisines = cuisines;
       fillCuisinesHTML();
     }
   });
-}
+};
 
 /**
  * Set cuisines HTML.
@@ -71,7 +71,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
     option.value = cuisine;
     select.append(option);
   });
-}
+};
 
 /**
  * Initialize Google map, called from HTML.
@@ -91,8 +91,8 @@ window.initMap = () => {
 };
 
 setMapTitle = () => {
-    const mapFrame = document.querySelector('#map').querySelector('iframe');
-    mapFrame.setAttribute('title', 'Google maps with restaurant location');
+  const mapFrame = document.querySelector('#map').querySelector('iframe');
+  mapFrame.setAttribute('title', 'Google maps with restaurant location');
 };
 
 /**
@@ -109,19 +109,20 @@ updateRestaurants = () => {
   const neighborhood = nSelect[nIndex].value;
 
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-    if (error) { // Got an error!
+    if (error) {
+      // Got an error!
       console.error(error);
     } else {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
     }
-  })
+  });
 };
 
 /**
  * Clear current restaurants, their HTML and remove their map markers.
  */
-resetRestaurants = (restaurants) => {
+resetRestaurants = restaurants => {
   // Remove all restaurants
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
@@ -147,14 +148,14 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 /**
  * Create restaurant HTML.
  */
-createRestaurantHTML = (restaurant) => {
+createRestaurantHTML = restaurant => {
   const li = document.createElement('li');
 
   const picture = document.createElement('picture');
 
   const source = document.createElement('source');
   source.className = 'restaurant-img';
-  source.setAttribute("data-srcset",DBHelper.imageWebpUrlForRestaurant(restaurant));
+  source.setAttribute("data-srcset", DBHelper.imageWebpUrlForRestaurant(restaurant));
   picture.append(source);
 
   const image = document.createElement('img');
@@ -184,7 +185,7 @@ createRestaurantHTML = (restaurant) => {
 
   li.onload = lazyLoad();
 
-  return li
+  return li;
 };
 
 /**
@@ -195,7 +196,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
     google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
+      window.location.href = marker.url;
     });
     self.markers.push(marker);
   });

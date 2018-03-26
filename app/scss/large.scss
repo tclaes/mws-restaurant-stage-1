@@ -1,71 +1,79 @@
-@charset "utf-8";
-/* CSS Document */
+@media screen and (min-width: 901px){
 
-    .inside {
-        display: grid;
-        grid-template-columns: 60% 40%;
-        grid-template-rows: auto 1fr auto;
-        grid-template-areas: "head head" "maincontent map-container ";
-        height: 100vh;
+  .filter-options {
+    flex-direction: row;
+    justify-content: center;
+  }
 
-        header {
-            grid-area: head;
-        }
+  .filter-options h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .filter-options select {
+    min-width: 300px;
+    border: 1px solid black;
+  }
 
-        #maincontent {
-            grid-area: maincontent;
-            overflow: auto;
-        }
+  .inside {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: "head head" "maincontent map-container ";
+    height: 100vh;
 
-        #map-container {
-            grid-area: map-container;
-            background: black;
-            overflow: hidden;
-        }
-
-        #map {
-            min-height: 100%;
-        }
+    header {
+      grid-area: head;
     }
 
-    #breadcrumb {
-        padding: 10px 40px 16px;
-        list-style: none;
-        background-color: #eee;
-        font-size: 17px;
-        margin: 0;
+    #maincontent {
+      grid-area: maincontent;
+      overflow: auto;
     }
 
-    #restaurant-container {
-        margin: 0 auto;
+    #map-container {
+      grid-area: map-container;
+      background: black;
+      overflow: hidden;
     }
 
-    #restaurant-img {
-        width: 100%;
+    #map {
+      min-height: 100%;
+    }
+  }
+
+  #breadcrumb {
+    padding: 10px 40px 16px;
+    list-style: none;
+    background-color: #eee;
+    font-size: 17px;
+    margin: 0;
+  }
+
+  #restaurant-container {
+    margin: 0 auto;
+  }
+
+  #restaurant-img {
+    width: 100%;
+  }
+
+  #restaurant-cuisine {
+    width: 100%;
+  }
+
+  .filter-options {
+    flex-direction: row;
+    justify-content: center;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
     }
 
-    #restaurant-cuisine {
-        width: 100%;
+    select {
+      min-width: 300px;
+      border: 1px solid black;
     }
 
-    .filter-options {
-        flex-direction: row;
-        justify-content: center;
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        select {
-            min-width: 300px;
-            border: 1px solid black;
-        }
-
-    }
-
-
-
-
-
-
+  }
+}

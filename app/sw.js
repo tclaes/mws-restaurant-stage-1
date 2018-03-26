@@ -8,10 +8,17 @@ workbox.routing.registerRoute(
     workbox.strategies.staleWhileRevalidate()
 );
 
-// workbox.routing.registerRoute(
-//     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap',
-//         workbox.strategies.networkFirst()
-// );
+workbox.routing.registerRoute(
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap',
+        workbox.strategies.staleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(
+    /\.(?:js|css)$/,
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'static-resources',
+    }),
+);
 
 self.addEventListener('push', (event) => {
     const title = 'Get Started With Workbox';
