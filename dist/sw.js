@@ -31,40 +31,20 @@ self.addEventListener('push', (event) => {
 
 workbox.precaching.precacheAndRoute([
   {
-    "url": "css/index.css",
-    "revision": "d41d8cd98f00b204e9800998ecf8427e"
-  },
-  {
     "url": "css/index.css.gz",
     "revision": "a59f70ed50da05a257c245bd023eae1b"
-  },
-  {
-    "url": "css/large.css",
-    "revision": "dd39da7b0daa810a203f94602e170220"
   },
   {
     "url": "css/large.css.gz",
     "revision": "3eb114d5546d91bc889b71b1e44b6c62"
   },
   {
-    "url": "css/main.css",
-    "revision": "4b3bab255440969aee40339fbd2be521"
-  },
-  {
     "url": "css/main.css.gz",
     "revision": "495c8b757706e394f0fd90e275ce1b08"
   },
   {
-    "url": "css/medium.css",
-    "revision": "a982f10f43f2e90d045334567ea9c936"
-  },
-  {
     "url": "css/medium.css.gz",
     "revision": "4fabf4843517a522c46d2b7e26c65839"
-  },
-  {
-    "url": "css/restaurant_info.css",
-    "revision": "fb19be19fce6fb2d7804bb26ec6e9336"
   },
   {
     "url": "css/restaurant_info.css.gz",
@@ -239,48 +219,24 @@ workbox.precaching.precacheAndRoute([
     "revision": "fbb97175f52f55fe7ce85ddc2936347d"
   },
   {
-    "url": "index.html",
-    "revision": "414d441dd231406afa8bb28a9534e521"
-  },
-  {
     "url": "index.html.gz",
     "revision": "d0a88ac0cf4a2f7aa004bc67755dec1e"
-  },
-  {
-    "url": "js/dbhelper.js",
-    "revision": "fcf45f3d33bf3c4e4ea684f88d4c0a36"
   },
   {
     "url": "js/dbhelper.js.gz",
     "revision": "50fcbaf91d4972ed4b7dadeb859a3b72"
   },
   {
-    "url": "js/lazyload.min.js",
-    "revision": "97581c97375435fa2cc8d0a77c7a33e3"
-  },
-  {
     "url": "js/lazyload.min.js.gz",
     "revision": "809cec45ca0d62d3d3f14790b4ba5e16"
-  },
-  {
-    "url": "js/main.js",
-    "revision": "bbda793eb793ca0d5d62d8c109a62123"
   },
   {
     "url": "js/main.js.gz",
     "revision": "a912832ae84a6b009e0cec8525084bd5"
   },
   {
-    "url": "js/restaurant_info.js",
-    "revision": "c01a92d0c0f6a229e9d00508e03d4654"
-  },
-  {
     "url": "js/restaurant_info.js.gz",
     "revision": "14e8b9700525566f51f40e34e5509c76"
-  },
-  {
-    "url": "restaurant.html",
-    "revision": "b60221749bb126aece7f7ac904faaed3"
   },
   {
     "url": "restaurant.html.gz",

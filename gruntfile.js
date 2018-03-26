@@ -5,7 +5,6 @@
   "grunt clean" removes the images directory
   "grunt responsive_images" re-processes images without removing the old ones
 */
-
 module.exports = function(grunt) {
 
     grunt.initConfig({
@@ -14,12 +13,12 @@ module.exports = function(grunt) {
           options: {
             sizes: [{
               name: 'small',
-              width: '60%',
+              width: '50%',
               suffix: '_small',
               quality: 40
             },{
               name: 'large',
-              width: '80%',
+              width: '70%',
               suffix: '_large',
               quality: 60
             }]
