@@ -6,10 +6,9 @@ var markers = [];
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
   fetchNeighborhoods();
   fetchCuisines();
-  lazyLoad();
 });
 
 /**
@@ -43,7 +42,7 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
     option.value = neighborhood;
     select.append(option);
   });
-}
+};
 
 /**
  * Fetch all cuisines and set their HTML.
@@ -57,7 +56,7 @@ fetchCuisines = () => {
       fillCuisinesHTML();
     }
   });
-}
+};
 
 /**
  * Set cuisines HTML.
@@ -71,7 +70,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
     option.value = cuisine;
     select.append(option);
   });
-}
+};
 
 /**
  * Initialize Google map, called from HTML.
@@ -152,14 +151,21 @@ createRestaurantHTML = (restaurant) => {
 
   const picture = document.createElement('picture');
 
-  const source = document.createElement('source');
-  source.className = 'restaurant-img';
-  source.setAttribute("data-srcset",DBHelper.imageWebpUrlForRestaurant(restaurant));
-  picture.append(source);
+  const sourceSmall = document.createElement('source');
+  sourceSmall.className = 'restaurant-img lazy';
+  sourceSmall.setAttribute("data-srcset",DBHelper.imageUrlForRestaurant(restaurant) + "_small.webp");
+  sourceSmall.setAttribute("media", "(min-width: 400px)")
+  picture.append(sourceSmall);
+
+    const sourceLarge = document.createElement('source');
+    sourceLarge.className = 'restaurant-img lazy';
+    sourceLarge.setAttribute("data-srcset",DBHelper.imageUrlForRestaurant(restaurant) + "_large.webp");
+    sourceLarge.setAttribute("media", "(min-width: 900px)")
+    picture.append(sourceLarge);
 
   const image = document.createElement('img');
   image.className = 'restaurant-img lazy';
-  image.setAttribute("data-src", DBHelper.imageUrlForRestaurant(restaurant));
+  image.setAttribute("data-src", DBHelper.imageUrlForRestaurant(restaurant) + "_small.jpg");
   image.alt = "An image of restaurant " + restaurant.name + " in " + restaurant.neighborhood;
   picture.append(image);
 

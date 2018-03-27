@@ -2,6 +2,12 @@ let restaurant;
 var map;
 
 /**
+ * LazyLoading images on init
+ */
+
+lazyLoad = () => new LazyLoad ();
+
+/**
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
@@ -25,12 +31,12 @@ window.initMap = () => {
  */
 fetchRestaurantFromURL = (callback) => {
   if (self.restaurant) { // restaurant already fetched!
-    callback(null, self.restaurant)
+    callback(null, self.restaurant);
     return;
   }
   const id = getParameterByName('id');
   if (!id) { // no id found in URL
-    error = 'No restaurant id in URL'
+    error = 'No restaurant id in URL';
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
@@ -43,7 +49,7 @@ fetchRestaurantFromURL = (callback) => {
       callback(null, restaurant)
     });
   }
-}
+};
 
 /**
  * Create restaurant HTML and add it to the webpage
@@ -55,10 +61,27 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
-  const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img';
-  image.alt = "An image of restaurant" + restaurant.name + " in " + restaurant.neighborhood;
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+    const picture = document.getElementById('restaurant-img');
+
+    const sourceSmall = document.createElement('source');
+    sourceSmall.className = 'restaurant-img';
+    sourceSmall.setAttribute("data-srcset",DBHelper.imageUrlForRestaurant(restaurant) + "_small.webp");
+    sourceSmall.setAttribute("media", "(min-width: 400px)")
+    picture.append(sourceSmall);
+
+    const sourceLarge = document.createElement('source');
+    sourceLarge.className = 'restaurant-img';
+    sourceLarge.setAttribute("data-srcset",DBHelper.imageUrlForRestaurant(restaurant) + "_large.webp");
+    sourceLarge.setAttribute("media", "(min-width: 900px)")
+    picture.append(sourceLarge);
+
+    const image = document.createElement('img');
+    image.className = 'restaurant-img lazy';
+    image.setAttribute("data-src", DBHelper.imageUrlForRestaurant(restaurant) + "_small.jpg");
+    image.alt = "An image of restaurant " + restaurant.name + " in " + restaurant.neighborhood;
+    picture.append(image);
+
+    picture.onload = lazyLoad();
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -69,7 +92,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   }
   // fill reviews
   fillReviewsHTML();
-}
+};
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
@@ -89,7 +112,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 
     hours.appendChild(row);
   }
-}
+};
 
 /**
  * Create all reviews HTML and add them to the webpage.
@@ -135,7 +158,7 @@ createReviewHTML = (review) => {
   li.appendChild(comments);
 
   return li;
-}
+};
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
@@ -145,7 +168,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   breadcrumb.appendChild(li);
-}
+};
 
 /**
  * Get a parameter by name from page URL.

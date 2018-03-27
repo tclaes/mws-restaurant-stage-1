@@ -23,16 +23,16 @@ const cssNano = require('gulp-cssnano');
 const gzip = require('gulp-gzip');
 const middleware = require('connect-gzip-static')('./dist');
 const sourcemaps = require('gulp-sourcemaps');
-const concat = require('gulp-concat');
+const responsive = require('gulp-responsive-images');
+const critical = require('critical');
 
-const src = 'app/';
-const dist = 'dist/';
+const src = 'app';
+const dist = 'dist';
 
 
 gulp.task('clean', () => {
     return del(dist);
 });
-
 
 gulp.task('css', () => {
     return gulp.src('app/scss/**/*.scss')
@@ -48,22 +48,47 @@ gulp.task('css', () => {
 
 gulp.task('html', () =>{
    return gulp.src('./app/**/*.html')
-       .pipe(gulp.dest('./dist'));
+       .pipe(gulp.dest('dist'));
 });
 
 gulp.task('js', () =>{
     return gulp.src(['!app/sw.js','./app/**/*.js'])
+        .pipe(sourcemaps.init())
         .pipe(babel())
         .pipe(minify())
         .pipe(gzip())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('./dist'))
         ;
 });
 
-
 gulp.task('lazyLoad', () =>{
     gulp.src('./app/js/lazyload.min.js')
         .pipe(gulp.dest('./dist/js'));
+});
+
+gulp.task('responsive', ()=>{
+    gulp.src('app/images_src/**/*')
+        .pipe(responsive({
+            '*.jpg': [{
+                width: '40%',
+                suffix: '_small'
+            }, {
+                width: '60%',
+                suffix: '_large'
+            }],
+        }))
+        .pipe(gulp.dest('app/img'));
+});
+
+gulp.task('webp', () => {
+    gulp.src('app/img/**/*.+(jpg|jpeg|png|gif|svg)')
+        .pipe(webp({
+            use: [
+                webp({quality: 20})
+            ]
+        }))
+        .pipe(gulp.dest('app/img'))
 });
 
 
@@ -75,16 +100,6 @@ gulp.task('image-min',() => {
             use: [pngquant()]
         })))
         .pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('webp', () => {
-    gulp.src('app/images/**/*.+(jpg|jpeg|png|gif|svg)')
-        .pipe(webp({
-            use: [
-                webp({quality: 20})
-            ]
-        }))
-        .pipe(gulp.dest('app/img'))
 });
 
 gulp.task('lint', () => {
@@ -114,12 +129,12 @@ gulp.task('scripts', ()=>{
 
 gulp.task('scripts-dist', ()=>{
     return gulp.src('app/**/*.+(html|css)')
-        // .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(gulpIf('*.html', minifyHtml({
             collapseWhitespace: true
         })))
         .pipe(gzip())
-        // .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist'))
 });
 
@@ -145,7 +160,7 @@ gulp.task('generate-service-worker', ['generate-manifest'], () => {
 gulp.task('generate-manifest',() => {
     gulp.src('./app/**/*.json')
         .pipe(gulp.dest('./dist'))
-})
+});
 
 gulp.task('build', ()=>{
     runSequence('clean',[
@@ -159,11 +174,12 @@ gulp.task('build', ()=>{
 // Browsersync
 gulp.task('serve',() =>{
     browserSync.init({
-        proxy: "https://localhost:3000",
-        https: {
-            key: "dev.tcla.be.key",
-            cert: "dev.tcla.be.crt"
-        },
+        // proxy: "https://localhost:3000",
+        // https: {
+        //     key: "dev.tcla.be.key",
+        //     cert: "dev.tcla.be.crt"
+        // },
+        server: 'dist',
         files: ['./dist/*.html', './dist/css/*.css', './dist/js/*.js']
         }, function (err, bs) {
             bs.addMiddleware("*", middleware, {
@@ -187,4 +203,8 @@ gulp.task('watch', ()=>{
     gulp.watch('app/*.html',['html'], reload);
     gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['image-min'], reload);
     gulp.watch('app/js/**/*.js', ['scripts'], reload);
-})
+});
+
+gulp.task('run',()=>{
+    runSequence('build', 'serve')
+});

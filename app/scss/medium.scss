@@ -1,4 +1,7 @@
-@media screen and (min-width: 451px) and (max-width:900px){
+@charset "utf-8";
+/* CSS Document */
+
+@media screen and (min-width: 451px) and (max-width:899px){
 
   .filter-options h2 {
     font-size: 2rem;
@@ -7,6 +10,11 @@
   .filter-options select {
     min-width: 350px;
     border: 1px solid black;
+  }
+
+  #map {
+    height: 400px;
+    background-color: #ccc;
   }
 }
 

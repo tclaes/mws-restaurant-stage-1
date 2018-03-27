@@ -13,7 +13,7 @@ module.exports = function(grunt) {
           options: {
             sizes: [{
               name: 'small',
-              width: '50%',
+              width: '20%',
               suffix: '_small',
               quality: 40
             },{

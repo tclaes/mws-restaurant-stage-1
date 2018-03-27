@@ -31,215 +31,255 @@ self.addEventListener('push', (event) => {
 
 workbox.precaching.precacheAndRoute([
   {
-    "url": "css/index.css.gz",
-    "revision": "a59f70ed50da05a257c245bd023eae1b"
+    "url": "css/large.css",
+    "revision": "9e96e36d17c93ad65bcfa82157f7e392"
   },
   {
     "url": "css/large.css.gz",
-    "revision": "3eb114d5546d91bc889b71b1e44b6c62"
+    "revision": "05d0bd0f33722155a75a3c3bb23eda2b"
+  },
+  {
+    "url": "css/main.css",
+    "revision": "136931892a84004be7ebfcd29c4a1f07"
   },
   {
     "url": "css/main.css.gz",
-    "revision": "495c8b757706e394f0fd90e275ce1b08"
+    "revision": "ae081688155c16941c28976e97e0048e"
+  },
+  {
+    "url": "css/medium.css",
+    "revision": "c4748738c27a158d0168eb2a93662d4c"
   },
   {
     "url": "css/medium.css.gz",
-    "revision": "4fabf4843517a522c46d2b7e26c65839"
+    "revision": "a3ffc3e50740f9cfa282ef4a813d7c76"
+  },
+  {
+    "url": "css/restaurant_info.css",
+    "revision": "183dc520d615b670b58c03eb3f4186f2"
   },
   {
     "url": "css/restaurant_info.css.gz",
-    "revision": "0d850a3617a12448170ba8d56225b20c"
+    "revision": "efb4512429db748bbde967c4f88cd7d5"
   },
   {
-    "url": "images/1-large_large.jpg",
-    "revision": "2fd2d7eb3b1f540db1bf69c88c97bb57"
+    "url": "images/1_large.jpg",
+    "revision": "bc2df7aed11aa73c2419fd85f6005e41"
   },
   {
-    "url": "images/1-large_large.webp",
-    "revision": "8030df9377dc53f866a6d7576f2d22c5"
+    "url": "images/1_large.webp",
+    "revision": "62b1caf89e485c0c3e416aaa5a9f118f"
   },
   {
-    "url": "images/1-small_small.jpg",
-    "revision": "b1c59be7b249e281033ba54da7081d32"
+    "url": "images/1_small.jpg",
+    "revision": "b26d08bdde0476e49f472985d8656d34"
   },
   {
-    "url": "images/1-small_small.webp",
-    "revision": "345044cd143dd1b60bc70622ac2c95e5"
+    "url": "images/1_small.webp",
+    "revision": "8cc4e0a8912b76d87c2a19b940f4a1eb"
   },
   {
-    "url": "images/10-large_large.jpg",
-    "revision": "7f728155f2355e7aabd1a1c3384a520e"
+    "url": "images/10_large.jpg",
+    "revision": "31fdcfd5104c069db9540d4508ecb1fb"
   },
   {
-    "url": "images/10-large_large.webp",
-    "revision": "342a271d4190148e91eb7cb0635a37ec"
+    "url": "images/10_large.webp",
+    "revision": "3ae066c3c67b0b2a6cf92dde946297f5"
   },
   {
-    "url": "images/10-small_small.jpg",
-    "revision": "bee6f208c284d9ef32ca917a235ff3fd"
+    "url": "images/10_small.jpg",
+    "revision": "8425538fde573cc26364a918369252c3"
   },
   {
-    "url": "images/10-small_small.webp",
-    "revision": "3e1fbdca9d62fc09523d347f80d6fe71"
+    "url": "images/10_small.webp",
+    "revision": "825c90de24f13728c963cec130ababcb"
   },
   {
-    "url": "images/2-large_large.jpg",
-    "revision": "daa66549a20a30e407006a89d2c97703"
+    "url": "images/2_large.jpg",
+    "revision": "9ce4232398eb6690f89de530f91ab5fd"
   },
   {
-    "url": "images/2-large_large.webp",
-    "revision": "ac012d95b0578250bc4b5bd2be939318"
+    "url": "images/2_large.webp",
+    "revision": "78946e7b0ce9b01cee73f25325f52b7e"
   },
   {
-    "url": "images/2-small_small.jpg",
-    "revision": "76c60fd628a5eed5ee2b553f9d5d7dc4"
+    "url": "images/2_small.jpg",
+    "revision": "6c5aec6011a25e43675ee44094e4103f"
   },
   {
-    "url": "images/2-small_small.webp",
-    "revision": "e80d424b4f255d07ee909076bd4ad74b"
+    "url": "images/2_small.webp",
+    "revision": "bf0496bc7355ab8bf4542317c375ee49"
   },
   {
-    "url": "images/3-large_large.jpg",
-    "revision": "6d61ca5865f6012337a6036cdcda1fb9"
+    "url": "images/3_large.jpg",
+    "revision": "01e9eff0d079c35473884937b66f0e6e"
   },
   {
-    "url": "images/3-large_large.webp",
-    "revision": "7e5ab7bdb6f963955ddeaf60a0e859ff"
+    "url": "images/3_large.webp",
+    "revision": "354300dedd00b79bc6e12cbb1fed71dc"
   },
   {
-    "url": "images/3-small_small.jpg",
-    "revision": "e4d22b0555dd84e1863924f66be23c17"
+    "url": "images/3_small.jpg",
+    "revision": "f0bb13f0b562f1e1dbabf6832d9e0af2"
   },
   {
-    "url": "images/3-small_small.webp",
-    "revision": "70c1766c4136f49431416e61940eee99"
+    "url": "images/3_small.webp",
+    "revision": "4beeaf89c8d6fda42e33c41d7ef87284"
   },
   {
-    "url": "images/4-large_large.jpg",
-    "revision": "4ff3e641c4f727c44219af8b990bcb24"
+    "url": "images/4_large.jpg",
+    "revision": "29b93b52ddfe0a6c650a9b0b1ceaa97a"
   },
   {
-    "url": "images/4-large_large.webp",
-    "revision": "96f9fdd2ceeb04d297ff012226d37e44"
+    "url": "images/4_large.webp",
+    "revision": "409b768bf8b22e96131e2b280afc5db1"
   },
   {
-    "url": "images/4-small_small.jpg",
-    "revision": "0a92b57c5a1ebe2d36fb2f3036bc383a"
+    "url": "images/4_small.jpg",
+    "revision": "df64f5750ca84bc0904a479f7758825d"
   },
   {
-    "url": "images/4-small_small.webp",
-    "revision": "4b0b0cf2002cd383971445a21b50ebad"
+    "url": "images/4_small.webp",
+    "revision": "d7b3f2bfb31a30dc6e93b88a3ce6d267"
   },
   {
-    "url": "images/5-large_large.jpg",
-    "revision": "5bbc9cb13dec2b79d47a46432be6a88f"
+    "url": "images/5_large.jpg",
+    "revision": "828ded5779f74a466f22ed118436a317"
   },
   {
-    "url": "images/5-large_large.webp",
-    "revision": "4ff4c02b0683b02d3fded88188d42288"
+    "url": "images/5_large.webp",
+    "revision": "621b45a40aa5115308b3e70a03b0add8"
   },
   {
-    "url": "images/5-small_small.jpg",
-    "revision": "3170640f5f5871ad576dd090be891b62"
+    "url": "images/5_small.jpg",
+    "revision": "5916698105d55d9900524de091afab42"
   },
   {
-    "url": "images/5-small_small.webp",
-    "revision": "a1371aee5b129f889c02b73aaece03c0"
+    "url": "images/5_small.webp",
+    "revision": "0b21f3cfeb274b9dc95949f9026fa275"
   },
   {
-    "url": "images/6-large_large.jpg",
-    "revision": "d8edc917abe823a95a6b5e5a6cbb40ff"
+    "url": "images/6_large.jpg",
+    "revision": "e2a0861e69c51e1116a80ef2998a731f"
   },
   {
-    "url": "images/6-large_large.webp",
-    "revision": "8bdba7b520e537b4b18ceb6d46ecbf5c"
+    "url": "images/6_large.webp",
+    "revision": "75c477d2506c9bfff31e973b16c2d0a5"
   },
   {
-    "url": "images/6-small_small.jpg",
-    "revision": "637acae76eb2e20593ab39f770bf2517"
+    "url": "images/6_small.jpg",
+    "revision": "cfb35569828aa5e8827336995ed12616"
   },
   {
-    "url": "images/6-small_small.webp",
-    "revision": "0680ada63c18807fe2f3d35e3c80816d"
+    "url": "images/6_small.webp",
+    "revision": "3911ba7c4eb690631611bc7aa920a005"
   },
   {
-    "url": "images/7-large_large.jpg",
-    "revision": "7618244e2f057832cfbcc7e27d698feb"
+    "url": "images/7_large.jpg",
+    "revision": "215d4b2443109493a42e7c7d9290cda2"
   },
   {
-    "url": "images/7-large_large.webp",
-    "revision": "3b1c22eabe85fe8d8bef93a515cb43c9"
+    "url": "images/7_large.webp",
+    "revision": "5fcd87771bc828359d40b2bc605a9393"
   },
   {
-    "url": "images/7-small_small.jpg",
-    "revision": "83450ec2e1f0df6947487d2d693b2189"
+    "url": "images/7_small.jpg",
+    "revision": "f928124284936c8f9d2a586839d08b86"
   },
   {
-    "url": "images/7-small_small.webp",
-    "revision": "ec30de9116d7f2f3455c6462633b4dcd"
+    "url": "images/7_small.webp",
+    "revision": "5691ba8f80d19a8b4ae545352479c845"
   },
   {
-    "url": "images/8-large_large.jpg",
-    "revision": "e43b090344133fa4c8bedfd1bdf9a0a6"
+    "url": "images/8_large.jpg",
+    "revision": "a00422951c7a8cc8c96231daff2e97c9"
   },
   {
-    "url": "images/8-large_large.webp",
-    "revision": "f662bfc5d208170eaf9a6b963abc62fa"
+    "url": "images/8_large.webp",
+    "revision": "ca5e127887faa2db70d983373605c106"
   },
   {
-    "url": "images/8-small_small.jpg",
-    "revision": "f5c955963b40231f330313e109d5592f"
+    "url": "images/8_small.jpg",
+    "revision": "ed8342d1dddf33a19ba74080a7b65e04"
   },
   {
-    "url": "images/8-small_small.webp",
-    "revision": "44c74d7c74f2b8e077b72889a9393e0a"
+    "url": "images/8_small.webp",
+    "revision": "eeec54a3e5c32644f654a5dfb79b7dfc"
   },
   {
-    "url": "images/9-large_large.jpg",
-    "revision": "52f6a8f0daf3c2794764508572d7ebc5"
+    "url": "images/9_large.jpg",
+    "revision": "e6273bc19114112c83272ba66d152976"
   },
   {
-    "url": "images/9-large_large.webp",
-    "revision": "8b5f78772aceebe7c641b189df5c9b96"
+    "url": "images/9_large.webp",
+    "revision": "331390fb3698b3896b270729cd6b8f2a"
   },
   {
-    "url": "images/9-small_small.jpg",
-    "revision": "f8a2154a27945801060bc75717ee3660"
+    "url": "images/9_small.jpg",
+    "revision": "770e7d22224da956611ecab0a1ae721a"
   },
   {
-    "url": "images/9-small_small.webp",
-    "revision": "9c71a46bb4bf890faba54e02470ac8bb"
+    "url": "images/9_small.webp",
+    "revision": "b0ba0acee3bc952dd60770ae89f86bc3"
   },
   {
     "url": "images/restaurant-1724294_640.webp",
     "revision": "ea54cf3f9dcd93c9818d7ff1d6f42bdd"
   },
   {
+    "url": "images/touch/restaurant144.webp",
+    "revision": "3d90e48b96c90e5d60badb488d198281"
+  },
+  {
     "url": "images/touch/restaurant48.webp",
     "revision": "fbb97175f52f55fe7ce85ddc2936347d"
   },
   {
+    "url": "index.html",
+    "revision": "99d0028e87124d12ee1d0c5eadce0068"
+  },
+  {
     "url": "index.html.gz",
-    "revision": "d0a88ac0cf4a2f7aa004bc67755dec1e"
+    "revision": "85de77b63970ea71e8ba9ebc81861080"
+  },
+  {
+    "url": "js/dbhelper.js",
+    "revision": "52e803e2debc100c71115878e143173a"
   },
   {
     "url": "js/dbhelper.js.gz",
-    "revision": "50fcbaf91d4972ed4b7dadeb859a3b72"
+    "revision": "a31ad42da6c305d11382c023b5469749"
+  },
+  {
+    "url": "js/lazyload.min.js",
+    "revision": "97581c97375435fa2cc8d0a77c7a33e3"
   },
   {
     "url": "js/lazyload.min.js.gz",
     "revision": "809cec45ca0d62d3d3f14790b4ba5e16"
   },
   {
+    "url": "js/main.js",
+    "revision": "9de0d7191befc8680bfce2582055c07a"
+  },
+  {
     "url": "js/main.js.gz",
-    "revision": "a912832ae84a6b009e0cec8525084bd5"
+    "revision": "d1111e5eee71deb110816155dcca43f1"
+  },
+  {
+    "url": "js/restaurant_info.js",
+    "revision": "d522d09b202070773e8cca394f488c97"
   },
   {
     "url": "js/restaurant_info.js.gz",
-    "revision": "14e8b9700525566f51f40e34e5509c76"
+    "revision": "617467c2f1f8954e322bcf12bfac1987"
+  },
+  {
+    "url": "restaurant.html",
+    "revision": "9fc5edf3dded75cbdc3b4d6cd98010df"
   },
   {
     "url": "restaurant.html.gz",
-    "revision": "6d81f4163405a70943ef7159a2f37c2f"
+    "revision": "9c45c3a313b6ef1e6b937c49e0da48ac"
   }
 ]);

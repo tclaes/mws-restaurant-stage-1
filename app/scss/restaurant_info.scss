@@ -1,3 +1,6 @@
+@charset "utf-8";
+/* CSS Document */
+
 /* Display list items side by side */
 #breadcrumb li {
   display: inline;
@@ -20,4 +23,11 @@
 #breadcrumb li a:hover {
   color: #01447e;
   text-decoration: underline;
+}
+
+@media screen and (max-width: 900px) {
+  .inside #footer {
+    width: 100%;
+    padding: 25px 0;
+  }
 }
