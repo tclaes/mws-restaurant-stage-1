@@ -10,14 +10,12 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap',
-        workbox.strategies.staleWhileRevalidate()
+    workbox.strategies.staleWhileRevalidate()
 );
 
 workbox.routing.registerRoute(
     /\.(?:js|css)$/,
-    workbox.strategies.staleWhileRevalidate({
-        cacheName: 'static-resources',
-    }),
+    workbox.strategies.staleWhileRevalidate(),
 );
 
 self.addEventListener('push', (event) => {

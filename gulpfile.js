@@ -21,13 +21,11 @@ const minifyHtml = require('gulp-htmlmin');
 const cleanCss = require('gulp-clean-css');
 const cssNano = require('gulp-cssnano');
 const gzip = require('gulp-gzip');
-const middleware = require('connect-gzip-static')('./dist');
 const sourcemaps = require('gulp-sourcemaps');
 const responsive = require('gulp-responsive-images');
-const critical = require('critical');
 
 const src = 'app';
-const dist = 'dist';
+const dist='dist';
 
 
 gulp.task('clean', () => {
@@ -41,25 +39,36 @@ gulp.task('css', () => {
             browsers: ['last 2 versions'],
             cascade: false
         }))
+        .pipe(sourcemaps.init())
         .pipe(cssNano())
         .pipe(cleanCss())
-        .pipe(gulp.dest('app/css'));
+        .pipe(gzip())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('./dist/css'));
 });
 
 gulp.task('html', () =>{
-   return gulp.src('./app/**/*.html')
-       .pipe(gulp.dest('dist'));
+   return gulp.src('app/**/*.html')
+       // .pipe(useref())
+       .pipe(sourcemaps.init())
+       .pipe( minifyHtml({
+        collapseWhitespace: true
+        }))
+       .pipe(gzip())
+       .pipe(sourcemaps.write())
+       .pipe(gulp.dest(dist));
 });
 
 gulp.task('js', () =>{
-    return gulp.src(['!app/sw.js','./app/**/*.js'])
+    return gulp.src('./app/**/*.js')
         .pipe(sourcemaps.init())
-        .pipe(babel())
+        .pipe(babel({
+            presets: browserSync['env']
+        }))
         .pipe(minify())
         .pipe(gzip())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./dist'))
-        ;
+        .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('lazyLoad', () =>{
@@ -119,30 +128,12 @@ gulp.task('lint', () => {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('scripts', ()=>{
-    return gulp.src('app/**/*.+(html|js|css)')
-        .pipe(gulpIf('*.js',babel({
-            presets: browserSync['env']
-        })))
-        .pipe(gulp.dest(dist))
-});
-
-gulp.task('scripts-dist', ()=>{
-    return gulp.src('app/**/*.+(html|css)')
-        .pipe(sourcemaps.init())
-        .pipe(gulpIf('*.html', minifyHtml({
-            collapseWhitespace: true
-        })))
-        .pipe(gzip())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist'))
-});
 
 gulp.task('generate-service-worker', ['generate-manifest'], () => {
     return workbox.injectManifest({
         globDirectory: dist,
         globPatterns: [
-            '**/*.{html,js,jpg,css,webp,gz}'
+            '**/*.{html,js,jpg,css}'
         ],
         swDest: `${dist}/sw.js`,
         swSrc: `${src}/sw.js`
@@ -168,10 +159,10 @@ gulp.task('build', ()=>{
         'css',
         'js',
         'image-min',
-        'scripts-dist'],'generate-manifest','generate-service-worker');
+        'scripts-dist'],'generate-service-worker');
 });
 
-// Browsersync
+//Browsersync
 gulp.task('serve',() =>{
     browserSync.init({
         // proxy: "https://localhost:3000",
@@ -180,22 +171,22 @@ gulp.task('serve',() =>{
         //     cert: "dev.tcla.be.crt"
         // },
         server: 'dist',
-        files: ['./dist/*.html', './dist/css/*.css', './dist/js/*.js']
+        files: ['./dist/*.html', './dist/css/*.css', './dist/js/*.js', './dist/sw.js']
         }, function (err, bs) {
-            bs.addMiddleware("*", middleware, {
+            bs.addMiddleware("*",  require('connect-gzip-static')('./dist'), {
                 override: true
             });
     });
 });
 
-gulp.task('default',['watch'], ()=>{
+gulp.task('default',['clean','watch'], ()=>{
     runSequence([
         'lint',
         'css',
         'html',
+        'js',
         'image-min',
-        'lazyLoad',
-        'scripts', 'generate-manifest'],'generate-service-worker', 'serve');
+        'lazyLoad', 'generate-manifest'],'generate-service-worker', 'serve');
 });
 
 gulp.task('watch', ()=>{

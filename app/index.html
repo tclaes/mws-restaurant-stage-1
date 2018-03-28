@@ -5,6 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
   <meta name="theme-color" content="#f3f3f3"/>
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      color: #333;
+      line-height: 1.5;
+    }
+    a {
+      color: orange;
+      text-decoration: none;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+    }
+
+    #maincontent {
+      background-color: #f3f3f3;
+      display: flex;
+      flex-direction: column;
+    }
+    #footer {
+      background-color: #444;
+      color: white;
+      letter-spacing: 1px;
+      padding: 25px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* ====================== Map ====================== */
+    #map {
+      height: 200px;
+    }
+
+    /* ====================== Navigation ====================== */
+    nav {
+        height: 80px;
+        background-color: #252831;
+        text-align:center;
+        display: flex;
+        align-items: center;
+        justify-content: center;}
+
+    nav a {
+        font-weight: 200;
+        letter-spacing: 10px;
+        text-transform: uppercase;
+    }
+
+    /* ====================== Restaurant Listing ====================== */
+    #restaurants-list {
+      list-style: outside none none;
+      padding: 30px 15px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+
+    /**
+*Lazy loading
+**/
+
+    img:not([src]):not([srcset]) {
+      visibility: hidden;
+    }
+
+  </style>
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/large.css" media="screen and (min-width:900px)">
@@ -35,10 +107,7 @@
           <option value="all">All Cuisines</option>
         </select>
       </div>
-      <div>
-        <ul id="restaurants-list"></ul>
-      </div>
-
+      <ul id="restaurants-list"></ul>
     </section>
   </main>
 
@@ -58,9 +127,10 @@
           });
       }
   </script>
-
+  <!-- build:js scripts/all-min.js -->
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <!-- endbuild -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap"></script>
 </body>
 
