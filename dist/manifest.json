@@ -3,9 +3,9 @@
   "short_name": "res_review",
   "theme_color": "#444444",
   "background_color": "#fff",
-  "display": "standalone",
+  "display": "minimal-ui",
   "scope": "/",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "gcm_sender_id": "103953800507",
   "icons": [{
     "src": "images/touch/restaurant48.png",

@@ -4,18 +4,16 @@ workbox.skipWaiting();
 workbox.clientsClaim();
 
 workbox.routing.registerRoute(
-    new RegExp('http://localhost:3000'),
+    new RegExp('https://fonts.googleapis.com'),
     workbox.strategies.staleWhileRevalidate()
 );
-
 workbox.routing.registerRoute(
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap',
+    new RegExp('https://maps.googleapis.com'),
     workbox.strategies.staleWhileRevalidate()
 );
-
 workbox.routing.registerRoute(
-    /\.(?:js|css)$/,
-    workbox.strategies.staleWhileRevalidate(),
+    new RegExp('https://maps.gstatic.com'),
+    workbox.strategies.staleWhileRevalidate()
 );
 
 self.addEventListener('push', (event) => {
@@ -26,90 +24,125 @@ self.addEventListener('push', (event) => {
     event.waitUntil(self.registration.showNotification(title, options));
 });
 
-
 workbox.precaching.precacheAndRoute([
   {
+    "url": "css/large.css",
+    "revision": "e9d6b93bdd7d90bca46e09a1edcdd649"
+  },
+  {
+    "url": "css/main.css",
+    "revision": "3331c1386684dc64186b64ad09abb4e9"
+  },
+  {
+    "url": "css/medium.css",
+    "revision": "dcd5fd7c499186337f70fbf3a1b85ebc"
+  },
+  {
+    "url": "css/restaurant_info.css",
+    "revision": "cb9490ab7557fddb983529ec5b28d587"
+  },
+  {
     "url": "images/1_large.jpg",
-    "revision": "bc2df7aed11aa73c2419fd85f6005e41"
+    "revision": "796225a2fd229c608223bdf0a3ce4fb9"
   },
   {
     "url": "images/1_small.jpg",
-    "revision": "b26d08bdde0476e49f472985d8656d34"
+    "revision": "1b67c35dda2558884aa15985e94b4ddf"
   },
   {
     "url": "images/10_large.jpg",
-    "revision": "31fdcfd5104c069db9540d4508ecb1fb"
+    "revision": "bfa01a40c1edc3108c0269e3433df8cf"
   },
   {
     "url": "images/10_small.jpg",
-    "revision": "8425538fde573cc26364a918369252c3"
+    "revision": "59d95726b12f1561651753d6f5347fbb"
   },
   {
     "url": "images/2_large.jpg",
-    "revision": "9ce4232398eb6690f89de530f91ab5fd"
+    "revision": "e4348683d8ba3357b577d8e73afd06a7"
   },
   {
     "url": "images/2_small.jpg",
-    "revision": "6c5aec6011a25e43675ee44094e4103f"
+    "revision": "48e0b9ad9c08399ad851f13f31a3c99d"
   },
   {
     "url": "images/3_large.jpg",
-    "revision": "01e9eff0d079c35473884937b66f0e6e"
+    "revision": "23a9fd30797d87d16e57bdd4064e2727"
   },
   {
     "url": "images/3_small.jpg",
-    "revision": "f0bb13f0b562f1e1dbabf6832d9e0af2"
+    "revision": "7253eef596478568b57fded836f9399c"
   },
   {
     "url": "images/4_large.jpg",
-    "revision": "29b93b52ddfe0a6c650a9b0b1ceaa97a"
+    "revision": "f49f7a09840cfa81ed7b5928b1b6d6b2"
   },
   {
     "url": "images/4_small.jpg",
-    "revision": "df64f5750ca84bc0904a479f7758825d"
+    "revision": "04224af125709b222256b96d94bb45e4"
   },
   {
     "url": "images/5_large.jpg",
-    "revision": "828ded5779f74a466f22ed118436a317"
+    "revision": "304ff3733c02de9f5fbfd0b355485f7d"
   },
   {
     "url": "images/5_small.jpg",
-    "revision": "5916698105d55d9900524de091afab42"
+    "revision": "6bd6e7197d01d225322db348f4a55c1f"
   },
   {
     "url": "images/6_large.jpg",
-    "revision": "e2a0861e69c51e1116a80ef2998a731f"
+    "revision": "2545c649b86ace20ef4f86de7f37b222"
   },
   {
     "url": "images/6_small.jpg",
-    "revision": "cfb35569828aa5e8827336995ed12616"
+    "revision": "bc48075c77612d7778d765f9306f1c98"
   },
   {
     "url": "images/7_large.jpg",
-    "revision": "215d4b2443109493a42e7c7d9290cda2"
+    "revision": "d75efc834360bb702b88503edb21c8aa"
   },
   {
     "url": "images/7_small.jpg",
-    "revision": "f928124284936c8f9d2a586839d08b86"
+    "revision": "c0aa32c4c864bed0c73d65ce9b29d5d9"
   },
   {
     "url": "images/8_large.jpg",
-    "revision": "a00422951c7a8cc8c96231daff2e97c9"
+    "revision": "837c2ace0f60a8d3d82b600257b9c554"
   },
   {
     "url": "images/8_small.jpg",
-    "revision": "ed8342d1dddf33a19ba74080a7b65e04"
+    "revision": "171cad095076009dc4e2e6c8c1b33239"
   },
   {
     "url": "images/9_large.jpg",
-    "revision": "e6273bc19114112c83272ba66d152976"
+    "revision": "1686ad7b60e72af94be6d1cc60a8b384"
   },
   {
     "url": "images/9_small.jpg",
-    "revision": "770e7d22224da956611ecab0a1ae721a"
+    "revision": "1d0fc1f0782a49f5ac9905878a1e89c6"
+  },
+  {
+    "url": "index.html",
+    "revision": "e95d9f2f8786ab65cdfa69c36192bfdd"
+  },
+  {
+    "url": "js/dbhelper.js",
+    "revision": "cb0cf554e7d26cea14e2d1cf21ba550b"
   },
   {
     "url": "js/lazyload.min.js",
-    "revision": "b8a13ad43117515f54be4856c1e1e786"
+    "revision": "bda712d7a864e42ea7b07b6f5e80dec8"
+  },
+  {
+    "url": "js/main.js",
+    "revision": "cd68c847abeee3e3efa03853bb49141a"
+  },
+  {
+    "url": "js/restaurant_info.js",
+    "revision": "848e1036736e54502bd469ce5a07ec34"
+  },
+  {
+    "url": "restaurant.html",
+    "revision": "dee4697de9dd1f0d222ddc5e9ad0f349"
   }
 ]);

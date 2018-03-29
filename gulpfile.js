@@ -10,8 +10,6 @@ const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const webp = require('gulp-webp');
 const autoprefixer = require('gulp-autoprefixer');
-const useref = require('gulp-useref');
-const gulpIf = require('gulp-if');
 const cache = require('gulp-cache');
 const workbox = require('workbox-build');
 const runSequence = require('run-sequence');
@@ -42,7 +40,6 @@ gulp.task('css', () => {
         .pipe(sourcemaps.init())
         .pipe(cssNano())
         .pipe(cleanCss())
-        .pipe(gzip())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./dist/css'));
 });
@@ -54,36 +51,38 @@ gulp.task('html', () =>{
        .pipe( minifyHtml({
         collapseWhitespace: true
         }))
-       .pipe(gzip())
        .pipe(sourcemaps.write())
        .pipe(gulp.dest(dist));
 });
 
 gulp.task('js', () =>{
-    return gulp.src('./app/**/*.js')
+    return gulp.src('./app/js/*.js')
         .pipe(sourcemaps.init())
         .pipe(babel({
             presets: browserSync['env']
         }))
         .pipe(minify())
-        .pipe(gzip())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./dist'));
-});
-
-gulp.task('lazyLoad', () =>{
-    gulp.src('./app/js/lazyload.min.js')
         .pipe(gulp.dest('./dist/js'));
 });
+
+gulp.task('gzip', () => {
+    gulp.src(['!app/sw.js','app/**/*.+(html|js|css)'])
+        .pipe(gzip())
+        .pipe(gulp.dest(dist))
+});
+
 
 gulp.task('responsive', ()=>{
     gulp.src('app/images_src/**/*')
         .pipe(responsive({
             '*.jpg': [{
                 width: '40%',
+                quality: 30,
                 suffix: '_small'
             }, {
                 width: '60%',
+                quality: 50,
                 suffix: '_large'
             }],
         }))
@@ -99,7 +98,6 @@ gulp.task('webp', () => {
         }))
         .pipe(gulp.dest('app/img'))
 });
-
 
 gulp.task('image-min',() => {
     return gulp.src('app/img/**/*.+(jpg|jpeg|png|gif|svg|webp)')
@@ -128,12 +126,11 @@ gulp.task('lint', () => {
         .pipe(eslint.failAfterError());
 });
 
-
-gulp.task('generate-service-worker', ['generate-manifest'], () => {
+gulp.task('generate-service-worker', () => {
     return workbox.injectManifest({
         globDirectory: dist,
         globPatterns: [
-            '**/*.{html,js,jpg,css}'
+            '**/*.{html,js,jpg,css,gz}'
         ],
         swDest: `${dist}/sw.js`,
         swSrc: `${src}/sw.js`
@@ -153,25 +150,11 @@ gulp.task('generate-manifest',() => {
         .pipe(gulp.dest('./dist'))
 });
 
-gulp.task('build', ()=>{
-    runSequence('clean',[
-        'lint',
-        'css',
-        'js',
-        'image-min',
-        'scripts-dist'],'generate-service-worker');
-});
-
 //Browsersync
 gulp.task('serve',() =>{
     browserSync.init({
-        // proxy: "https://localhost:3000",
-        // https: {
-        //     key: "dev.tcla.be.key",
-        //     cert: "dev.tcla.be.crt"
-        // },
-        server: 'dist',
-        files: ['./dist/*.html', './dist/css/*.css', './dist/js/*.js', './dist/sw.js']
+        server: './dist',
+        files: ['./dist/*.html', './dist/css/*.css', './dist/js/*.js']
         }, function (err, bs) {
             bs.addMiddleware("*",  require('connect-gzip-static')('./dist'), {
                 override: true
@@ -185,17 +168,15 @@ gulp.task('default',['clean','watch'], ()=>{
         'css',
         'html',
         'js',
+        'responsive',
         'image-min',
-        'lazyLoad', 'generate-manifest'],'generate-service-worker', 'serve');
+        'webp'
+        ],'gzip','generate-manifest','generate-service-worker', 'serve');
 });
 
 gulp.task('watch', ()=>{
-    gulp.watch('app/scss/**/*.scss', ['css', 'scripts'],reload);
+    gulp.watch('app/scss/**/*.scss', ['css'],reload);
     gulp.watch('app/*.html',['html'], reload);
-    gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['image-min'], reload);
-    gulp.watch('app/js/**/*.js', ['scripts'], reload);
-});
-
-gulp.task('run',()=>{
-    runSequence('build', 'serve')
+    // gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['responsive'], reload);
+    gulp.watch('app/js/**/*.js', ['js'], reload);
 });

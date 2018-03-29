@@ -4,18 +4,16 @@ workbox.skipWaiting();
 workbox.clientsClaim();
 
 workbox.routing.registerRoute(
-    new RegExp('https://hacker-news.firebaseio.com'),
+    new RegExp('https://fonts.googleapis.com'),
     workbox.strategies.staleWhileRevalidate()
 );
-
 workbox.routing.registerRoute(
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap',
+    new RegExp('https://maps.googleapis.com'),
     workbox.strategies.staleWhileRevalidate()
 );
-
 workbox.routing.registerRoute(
-    /\.(?:js|css)$/,
-    workbox.strategies.staleWhileRevalidate(),
+    new RegExp('https://maps.gstatic.com'),
+    workbox.strategies.staleWhileRevalidate()
 );
 
 self.addEventListener('push', (event) => {
@@ -25,6 +23,5 @@ self.addEventListener('push', (event) => {
     };
     event.waitUntil(self.registration.showNotification(title, options));
 });
-
 
 workbox.precaching.precacheAndRoute([]);
