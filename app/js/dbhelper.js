@@ -12,6 +12,15 @@ class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
+  static createIndexedDB() {
+      if (!('indexedDB' in window)) {return null;}
+      return idb.open('restaurantReview', 1, function(upgradeDb) {
+          if (!upgradeDb.objectStoreNames.contains('restaurants')) {
+              const restaurantOS = upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+          }
+      });
+  }
+
   /**
    * Fetch all restaurants.
    */
@@ -20,6 +29,19 @@ class DBHelper {
           .then(response => response.json())
           .then(restaurants => callback(null, restaurants));
   }
+
+    static saveRestaurantDataLocally(restaurant) {
+        if (!('indexedDB' in window)) {return null;}
+        return DBHelper.createIndexedDB().then(db => {
+            const tx = db.transaction('restaurants', 'readwrite');
+            const store = tx.objectStore('restaurants');
+            return Promise.all(restaurant.map(event => store.put(event)))
+                .catch(() => {
+                    tx.abort();
+                    throw Error('Events were not added to the store');
+                });
+        });
+    }
 
   /**
    * Fetch a restaurant by its ID.
