@@ -35,91 +35,11 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "css/medium.css",
-    "revision": "dcd5fd7c499186337f70fbf3a1b85ebc"
+    "revision": "8611deb77cb13f151b2542014f189352"
   },
   {
     "url": "css/restaurant_info.css",
     "revision": "cb9490ab7557fddb983529ec5b28d587"
-  },
-  {
-    "url": "images/1_large.jpg",
-    "revision": "796225a2fd229c608223bdf0a3ce4fb9"
-  },
-  {
-    "url": "images/1_small.jpg",
-    "revision": "1b67c35dda2558884aa15985e94b4ddf"
-  },
-  {
-    "url": "images/10_large.jpg",
-    "revision": "bfa01a40c1edc3108c0269e3433df8cf"
-  },
-  {
-    "url": "images/10_small.jpg",
-    "revision": "59d95726b12f1561651753d6f5347fbb"
-  },
-  {
-    "url": "images/2_large.jpg",
-    "revision": "e4348683d8ba3357b577d8e73afd06a7"
-  },
-  {
-    "url": "images/2_small.jpg",
-    "revision": "48e0b9ad9c08399ad851f13f31a3c99d"
-  },
-  {
-    "url": "images/3_large.jpg",
-    "revision": "23a9fd30797d87d16e57bdd4064e2727"
-  },
-  {
-    "url": "images/3_small.jpg",
-    "revision": "7253eef596478568b57fded836f9399c"
-  },
-  {
-    "url": "images/4_large.jpg",
-    "revision": "f49f7a09840cfa81ed7b5928b1b6d6b2"
-  },
-  {
-    "url": "images/4_small.jpg",
-    "revision": "04224af125709b222256b96d94bb45e4"
-  },
-  {
-    "url": "images/5_large.jpg",
-    "revision": "304ff3733c02de9f5fbfd0b355485f7d"
-  },
-  {
-    "url": "images/5_small.jpg",
-    "revision": "6bd6e7197d01d225322db348f4a55c1f"
-  },
-  {
-    "url": "images/6_large.jpg",
-    "revision": "2545c649b86ace20ef4f86de7f37b222"
-  },
-  {
-    "url": "images/6_small.jpg",
-    "revision": "bc48075c77612d7778d765f9306f1c98"
-  },
-  {
-    "url": "images/7_large.jpg",
-    "revision": "d75efc834360bb702b88503edb21c8aa"
-  },
-  {
-    "url": "images/7_small.jpg",
-    "revision": "c0aa32c4c864bed0c73d65ce9b29d5d9"
-  },
-  {
-    "url": "images/8_large.jpg",
-    "revision": "837c2ace0f60a8d3d82b600257b9c554"
-  },
-  {
-    "url": "images/8_small.jpg",
-    "revision": "171cad095076009dc4e2e6c8c1b33239"
-  },
-  {
-    "url": "images/9_large.jpg",
-    "revision": "1686ad7b60e72af94be6d1cc60a8b384"
-  },
-  {
-    "url": "images/9_small.jpg",
-    "revision": "1d0fc1f0782a49f5ac9905878a1e89c6"
   },
   {
     "url": "index.html",
@@ -127,7 +47,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "js/dbhelper.js",
-    "revision": "cb0cf554e7d26cea14e2d1cf21ba550b"
+    "revision": "1ae71f71f61c178391ad61974d79c885"
   },
   {
     "url": "js/lazyload.min.js",
@@ -135,7 +55,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "js/main.js",
-    "revision": "cd68c847abeee3e3efa03853bb49141a"
+    "revision": "2cc1d755cf439c1e2f095b54b306ffec"
   },
   {
     "url": "js/restaurant_info.js",
@@ -144,5 +64,9 @@ workbox.precaching.precacheAndRoute([
   {
     "url": "restaurant.html",
     "revision": "dee4697de9dd1f0d222ddc5e9ad0f349"
+  },
+  {
+    "url": "/",
+    "revision": "0dd92581a506d46f785b7f8a9cb6ab94"
   }
 ]);

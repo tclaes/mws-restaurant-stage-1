@@ -4,6 +4,8 @@
   "description": "---\r #### _Three Stage Course Material Project - Restaurant Reviews_ Stage 1",
   "main": "gruntfile.js",
   "dependencies": {
+    "ajv": "^6.4.0",
+    "ajv-keywords": "^3.1.0",
     "babel-preset-env": "^1.6.1",
     "grunt": "^1.0.2",
     "grunt-contrib-clean": "^1.1.0",
@@ -13,7 +15,7 @@
     "gulp-htmlmin": "^4.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-webp": "^3.0.0",
-    "idb": "^2.1.0",
+    "idb": "^2.1.1",
     "imagemin": "^5.3.1",
     "imagemin-pngquant": "^5.0.1",
     "imagemin-webp": "^4.1.0"

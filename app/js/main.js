@@ -138,6 +138,7 @@ resetRestaurants = (restaurants) => {
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
+      DBHelper.saveRestaurantDataLocally(restaurant);
     ul.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
