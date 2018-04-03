@@ -4,7 +4,7 @@ const gulp   = require('gulp'),
     sass   = require('gulp-sass'),
     browserSync = require('browser-sync').create(),
     reload = browserSync.reload,
-    eslint = require('gulp-eslint');
+    eslint = require('babel-eslint');
 const babel = require('gulp-babel');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
@@ -24,7 +24,6 @@ const responsive = require('gulp-responsive-images');
 
 const src = 'app';
 const dist='dist';
-
 
 gulp.task('clean', () => {
     return del(dist);
@@ -46,7 +45,6 @@ gulp.task('css', () => {
 
 gulp.task('html', () =>{
    return gulp.src('app/**/*.html')
-       // .pipe(useref())
        .pipe(sourcemaps.init())
        .pipe( minifyHtml({
         collapseWhitespace: true
@@ -58,16 +56,35 @@ gulp.task('html', () =>{
 gulp.task('js', () =>{
     return gulp.src('./app/js/*.js')
         .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: browserSync['env']
-        }))
+        .pipe(babel(
+            {
+                "compact": false,
+                "plugins": [
+                    "transform-class-properties",
+                    "transform-object-rest-spread"
+                ],
+                "presets": [
+                    [
+                    "env", {
+                        "targets": {
+                        "browsers": [
+                            "last 2 versions",
+                            "safari >= 7"
+                        ],
+                        "useBuiltIns": true
+                        }
+                    }
+                    ]
+                ]
+            }
+        ))
         .pipe(minify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('gzip', () => {
-    gulp.src(['!app/sw.js','app/**/*.+(html|js|css)'])
+    gulp.src(['!app/sw.js','app/**/*.+(html|css)'])
         .pipe(gzip())
         .pipe(gulp.dest(dist))
 });
@@ -109,22 +126,22 @@ gulp.task('image-min',() => {
         .pipe(gulp.dest('dist/images'));
 });
 
-gulp.task('lint', () => {
-    // ESLint ignores files with "node_modules" paths.
-    // So, it's best to have gulp ignore the directory as well.
-    // Also, Be sure to return the stream from the task;
-    // Otherwise, the task may end before the stream has finished.
-    return gulp.src(['js/**/*.js','!node_modules/**'])
-    // eslint() attaches the lint output to the "eslint" property
-    // of the file object so it can be used by other modules.
-        .pipe(eslint())
-        // eslint.format() outputs the lint results to the console.
-        // Alternatively use eslint.formatEach() (see Docs).
-        .pipe(eslint.format())
-        // To have the process exit with an error code (1) on
-        // lint error, return the stream and pipe to failAfterError last.
-        .pipe(eslint.failAfterError());
-});
+// gulp.task('lint', () => {
+//     // ESLint ignores files with "node_modules" paths.
+//     // So, it's best to have gulp ignore the directory as well.
+//     // Also, Be sure to return the stream from the task;
+//     // Otherwise, the task may end before the stream has finished.
+//     return gulp.src(['js/**/*.js','!node_modules/**'])
+//     // eslint() attaches the lint output to the "eslint" property
+//     // of the file object so it can be used by other modules.
+//         .pipe(eslint())
+//         // eslint.format() outputs the lint results to the console.
+//         // Alternatively use eslint.formatEach() (see Docs).
+//         .pipe(eslint.format())
+//         // To have the process exit with an error code (1) on
+//         // lint error, return the stream and pipe to failAfterError last.
+//         .pipe(eslint.failAfterError());
+// });
 
 gulp.task('generate-service-worker', () => {
     return workbox.injectManifest({
@@ -167,7 +184,6 @@ gulp.task('serve',() =>{
 
 gulp.task('default',['clean','watch'], ()=>{
     runSequence([
-        'lint',
         'css',
         'html',
         'js',
