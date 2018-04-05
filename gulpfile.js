@@ -1,3 +1,4 @@
+'use strict';
 /* file: gulpfile.js */
 
 const gulp   = require('gulp'),
@@ -6,6 +7,7 @@ const gulp   = require('gulp'),
     reload = browserSync.reload,
     eslint = require('babel-eslint');
 const babel = require('gulp-babel');
+const babelify = require('babelify');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const webp = require('gulp-webp');
@@ -21,6 +23,10 @@ const cssNano = require('gulp-cssnano');
 const gzip = require('gulp-gzip');
 const sourcemaps = require('gulp-sourcemaps');
 const responsive = require('gulp-responsive-images');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const uglify = require('gulp-uglify');
 
 const src = 'app';
 const dist='dist';
@@ -56,30 +62,9 @@ gulp.task('html', () =>{
 gulp.task('js', () =>{
     return gulp.src('./app/js/*.js')
         .pipe(sourcemaps.init())
-        .pipe(babel(
-            {
-                "compact": false,
-                "plugins": [
-                    "transform-class-properties",
-                    "transform-object-rest-spread"
-                ],
-                "presets": [
-                    [
-                    "env", {
-                        "targets": {
-                        "browsers": [
-                            "last 2 versions",
-                            "safari >= 7"
-                        ],
-                        "useBuiltIns": true
-                        }
-                    }
-                    ]
-                ]
-            }
-        ))
+        .pipe(babel())
         .pipe(minify())
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./dist/js'));
 });
 
@@ -126,22 +111,22 @@ gulp.task('image-min',() => {
         .pipe(gulp.dest('dist/images'));
 });
 
-// gulp.task('lint', () => {
-//     // ESLint ignores files with "node_modules" paths.
-//     // So, it's best to have gulp ignore the directory as well.
-//     // Also, Be sure to return the stream from the task;
-//     // Otherwise, the task may end before the stream has finished.
-//     return gulp.src(['js/**/*.js','!node_modules/**'])
-//     // eslint() attaches the lint output to the "eslint" property
-//     // of the file object so it can be used by other modules.
-//         .pipe(eslint())
-//         // eslint.format() outputs the lint results to the console.
-//         // Alternatively use eslint.formatEach() (see Docs).
-//         .pipe(eslint.format())
-//         // To have the process exit with an error code (1) on
-//         // lint error, return the stream and pipe to failAfterError last.
-//         .pipe(eslint.failAfterError());
-// });
+gulp.task('lint', () => {
+    // ESLint ignores files with "node_modules" paths.
+    // So, it's best to have gulp ignore the directory as well.
+    // Also, Be sure to return the stream from the task;
+    // Otherwise, the task may end before the stream has finished.
+    return gulp.src(['js/**/*.js','!node_modules/**'])
+    // eslint() attaches the lint output to the "eslint" property
+    // of the file object so it can be used by other modules.
+        .pipe(eslint())
+        // eslint.format() outputs the lint results to the console.
+        // Alternatively use eslint.formatEach() (see Docs).
+        .pipe(eslint.format())
+        // To have the process exit with an error code (1) on
+        // lint error, return the stream and pipe to failAfterError last.
+        .pipe(eslint.failAfterError());
+});
 
 gulp.task('generate-service-worker', () => {
     return workbox.injectManifest({
@@ -182,20 +167,32 @@ gulp.task('serve',() =>{
     });
 });
 
+gulp.task('browserify', function () {
+    // app.js is your main JS file with all your module inclusions
+    return browserify(['./app/js/main.js'])
+        .transform("babelify", { presets: ["es2015"] })
+        .bundle()
+        .pipe(source('main.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./dist/js'))
+});
+
+
 gulp.task('default',['clean','watch'], ()=>{
     runSequence([
         'css',
         'html',
-        'js',
         'responsive',
         'image-min',
         'webp'
-        ],'gzip','generate-manifest','generate-service-worker', 'serve');
+        ],'browserify','gzip','generate-manifest','generate-service-worker', 'serve');
 });
 
 gulp.task('watch', ()=>{
     gulp.watch('app/scss/**/*.scss', ['css'],reload);
     gulp.watch('app/*.html',['html'], reload);
-    // gulp.watch('app/img/**/*.+(jpg|jpeg|png|gif|svg)',['responsive'], reload);
     gulp.watch('app/js/**/*.js', ['js'], reload);
 });
