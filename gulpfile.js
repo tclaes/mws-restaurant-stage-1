@@ -59,15 +59,6 @@ gulp.task('html', () =>{
        .pipe(gulp.dest(dist));
 });
 
-gulp.task('js', () =>{
-    return gulp.src('./app/js/*.js')
-        .pipe(sourcemaps.init())
-        .pipe(babel())
-        .pipe(minify())
-        .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest('./dist/js'));
-});
-
 gulp.task('gzip', () => {
     gulp.src(['!app/sw.js','app/**/*.+(html|css)'])
         .pipe(gzip())
@@ -132,7 +123,7 @@ gulp.task('generate-service-worker', () => {
     return workbox.injectManifest({
         globDirectory: dist,
         globPatterns: [
-            '**/*.{html,js,css}'
+            '**/*.{html,json,js,css}'
         ],
         templatedUrls: {
             '/': ['index.html']
@@ -172,7 +163,7 @@ gulp.task('browserify', function () {
     return browserify(['./app/js/main.js'])
         .transform("babelify", { presets: ["es2015"] })
         .bundle()
-        .pipe(source('main.js'))
+        .pipe(source('test.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init())
         .pipe(uglify())
@@ -187,12 +178,13 @@ gulp.task('default',['clean','watch'], ()=>{
         'html',
         'responsive',
         'image-min',
-        'webp'
-        ],'browserify','gzip','generate-manifest','generate-service-worker', 'serve');
+        'webp',
+        'generate-manifest'
+        ],'browserify','gzip','generate-service-worker', 'serve');
 });
 
 gulp.task('watch', ()=>{
     gulp.watch('app/scss/**/*.scss', ['css'],reload);
     gulp.watch('app/*.html',['html'], reload);
-    gulp.watch('app/js/**/*.js', ['js'], reload);
+    gulp.watch('app/js/**/*.js', ['browserify'], reload);
 });

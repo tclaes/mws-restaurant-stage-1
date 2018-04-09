@@ -43,11 +43,15 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "d9464b9dc85919dd05ae68c582d20a5a"
+    "revision": "c589468d6d5243ea50a28115abfc7a29"
   },
   {
-    "url": "js/main.js",
-    "revision": "e4147af56e280d6306ac69dd311d4f02"
+    "url": "js/test.js",
+    "revision": "8309eda869d77b0c31d56edda6521169"
+  },
+  {
+    "url": "manifest.json",
+    "revision": "23ef107f9fe1281d9146daa6df649b94"
   },
   {
     "url": "restaurant.html",
@@ -55,6 +59,6 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "/",
-    "revision": "c7bbad4de75338744509067504bfda8c"
+    "revision": "25fc349c32717361dc4fe53269aab94b"
   }
 ]);

@@ -1,3 +1,4 @@
+import idb from 'idb';
 /**
  * Common database helper functions.
  */
@@ -11,15 +12,15 @@ class DBHelper {
     const port = 1337;
     return `http://localhost:${port}/restaurants`;
   }
-  //
-  // static createIndexedDB() {
-  //     if (!('indexedDB' in window)) {return null;}
-  //     return idb.open('restaurantReview', 1, function(upgradeDb) {
-  //         if (!upgradeDb.objectStoreNames.contains('restaurants')) {
-  //             const restaurantOS = upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
-  //         }
-  //     });
-  // }
+
+  static dbPromise() {
+      if (!('indexedDB' in window)) {return null;}
+      return idb.open('restaurantReview', 1, upgradeDb => {
+          if (!upgradeDb.objectStoreNames.contains('restaurants')) {
+              upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+          }
+      });
+  }
 
   /**
    * Fetch all restaurants.
@@ -27,21 +28,30 @@ class DBHelper {
   static fetchRestaurants(callback) {
       fetch(DBHelper.DATABASE_URL)
           .then(response => response.json())
-          .then(restaurants => callback(null, restaurants));
+          .then(restaurants =>
+              callback(null, restaurants))
+
   }
 
-    // static saveRestaurantDataLocally(restaurant) {
-    //     if (!('indexedDB' in window)) {return null;}
-    //     return DBHelper.createIndexedDB().then(db => {
-    //         const tx = db.transaction('restaurants', 'readwrite');
-    //         const store = tx.objectStore('restaurants');
-    //         return Promise.all(restaurant.map(event => store.put(event)))
-    //             .catch(() => {
-    //                 tx.abort();
-    //                 throw Error('Events were not added to the store');
-    //             });
-    //     });
-    // }
+  static getAllDataLocally() {
+      return DBHelper.dbPromise().then(db => {
+          db.transaction('restaurants', 'readwrite')
+              .objectStore('restaurants').getAll();
+      }).then(restaurants => console.log(restaurants))
+  }
+
+    static saveRestaurantDataLocally(restaurants) {
+        if (!('indexedDB' in window)) {return null;}
+        return DBHelper.dbPromise().then(db => {
+            const tx = db.transaction('restaurants', 'readwrite');
+            const store = tx.objectStore('restaurants');
+            return Promise.all(restaurants.map(restaurant => store.put(restaurant)))
+                .catch(() => {
+                    tx.abort();
+                    throw Error('Events were not added to the store');
+                });
+        });
+    }
 
   /**
    * Fetch a restaurant by its ID.
@@ -49,7 +59,7 @@ class DBHelper {
   static fetchRestaurantById(id, callback) {
     // fetch all restaurants with proper error handling.
     DBHelper.fetchRestaurants((error, restaurants) => {
-      if (error) {
+      if (error){
         callback(error, null);
       } else {
         const restaurant = restaurants.find(r => r.id == id);
@@ -147,3 +157,5 @@ class DBHelper {
     return marker;
   }
 }
+
+export default DBHelper;
