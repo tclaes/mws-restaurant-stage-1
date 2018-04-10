@@ -135,7 +135,6 @@ import LazyLoad from './lazyload.min';
      * Create all restaurants HTML and add them to the webpage.
      */
     fillRestaurantsHTML = (restaurants = self.restaurants) => {
-        DBHelper.saveRestaurantDataLocally(restaurants);
         const ul = document.getElementById('restaurants-list');
         restaurants.forEach(restaurant => {
 

@@ -14,11 +14,8 @@ class DBHelper {
   }
 
   static dbPromise() {
-      if (!('indexedDB' in window)) {return null;}
       return idb.open('restaurantReview', 1, upgradeDb => {
-          if (!upgradeDb.objectStoreNames.contains('restaurants')) {
-              upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
-          }
+          upgradeDb.createObjectStore('restaurants', {keyPath: 'id'})
       });
   }
 
@@ -28,16 +25,25 @@ class DBHelper {
   static fetchRestaurants(callback) {
       fetch(DBHelper.DATABASE_URL)
           .then(response => response.json())
-          .then(restaurants =>
-              callback(null, restaurants))
-
+          .then(restaurants => {
+              this.saveRestaurantDataLocally(restaurants);
+              callback(null, restaurants);
+          })
+          .catch(
+              error => {
+                  console.log('Dit is de fout' + error);
+                  this.getAllDataLocally()
+                      .then(restaurants =>
+                  callback(null, restaurants))
+              }
+          );
   }
 
   static getAllDataLocally() {
       return DBHelper.dbPromise().then(db => {
-          db.transaction('restaurants', 'readwrite')
+          return db.transaction('restaurants')
               .objectStore('restaurants').getAll();
-      }).then(restaurants => console.log(restaurants))
+      })
   }
 
     static saveRestaurantDataLocally(restaurants) {
