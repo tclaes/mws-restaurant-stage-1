@@ -15,6 +15,18 @@ workbox.routing.registerRoute(
     new RegExp('https://maps.gstatic.com'),
     workbox.strategies.staleWhileRevalidate()
 );
+workbox.routing.registerRoute(
+    new RegExp('http://localhost:3000/(.*)'),
+    workbox.strategies.staleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(/\.(?:png|gif|jpg|jpeg|webp)$/,
+    workbox.strategies.staleWhileRevalidate({
+        cacheExpiration: {
+            maxEntries: 50
+        }
+    })
+);
 
 self.addEventListener('push', (event) => {
     const title = 'Get Started With Workbox';
@@ -43,11 +55,15 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "c589468d6d5243ea50a28115abfc7a29"
+    "revision": "5af057b1ba95251539d7c8ef7f98065d"
   },
   {
-    "url": "js/test.js",
-    "revision": "441be9212f7f0c500ad21d7343a2ded9"
+    "url": "js/main.min.js",
+    "revision": "869d9b4b8526fe7614ae29cdf8ab4bc9"
+  },
+  {
+    "url": "js/restaurant.min.js",
+    "revision": "d5ad43f4097fb2368901004ccdcb58fc"
   },
   {
     "url": "manifest.json",
@@ -55,10 +71,10 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "restaurant.html",
-    "revision": "dee4697de9dd1f0d222ddc5e9ad0f349"
+    "revision": "9ce086cf33f1bb39366698360ff18bd1"
   },
   {
     "url": "/",
-    "revision": "25fc349c32717361dc4fe53269aab94b"
+    "revision": "c0d3976444bc9bb9cab28a2141011fed"
   }
 ]);

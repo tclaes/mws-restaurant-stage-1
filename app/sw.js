@@ -15,6 +15,18 @@ workbox.routing.registerRoute(
     new RegExp('https://maps.gstatic.com'),
     workbox.strategies.staleWhileRevalidate()
 );
+workbox.routing.registerRoute(
+    new RegExp('http://localhost:3000/(.*)'),
+    workbox.strategies.staleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(/\.(?:png|gif|jpg|jpeg|webp)$/,
+    workbox.strategies.staleWhileRevalidate({
+        cacheExpiration: {
+            maxEntries: 50
+        }
+    })
+);
 
 self.addEventListener('push', (event) => {
     const title = 'Get Started With Workbox';

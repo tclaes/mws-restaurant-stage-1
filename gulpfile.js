@@ -6,7 +6,6 @@ const gulp   = require('gulp'),
     browserSync = require('browser-sync').create(),
     reload = browserSync.reload,
     eslint = require('babel-eslint');
-const babel = require('gulp-babel');
 const babelify = require('babelify');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
@@ -16,7 +15,6 @@ const cache = require('gulp-cache');
 const workbox = require('workbox-build');
 const runSequence = require('run-sequence');
 const del = require('del');
-const minify = require('gulp-babel-minify');
 const minifyHtml = require('gulp-htmlmin');
 const cleanCss = require('gulp-clean-css');
 const cssNano = require('gulp-cssnano');
@@ -163,7 +161,20 @@ gulp.task('browserify', function () {
     return browserify(['./app/js/main.js'])
         .transform("babelify", { presets: ["es2015"] })
         .bundle()
-        .pipe(source('test.js'))
+        .pipe(source('main.min.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./dist/js'))
+});
+
+gulp.task('restaurant_info', function () {
+    // app.js is your main JS file with all your module inclusions
+    return browserify(['./app/js/restaurant_info.js'])
+        .transform("babelify", { presets: ["es2015"] })
+        .bundle()
+        .pipe(source('restaurant.min.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init())
         .pipe(uglify())
@@ -180,7 +191,7 @@ gulp.task('default',['clean','watch'], ()=>{
         'image-min',
         'webp',
         'generate-manifest'
-        ],'browserify','gzip','generate-service-worker', 'serve');
+        ],'browserify', 'restaurant_info','gzip','generate-service-worker', 'serve');
 });
 
 gulp.task('watch', ()=>{
