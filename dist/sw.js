@@ -1,42 +1,27 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
+
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js");
 
 workbox.skipWaiting();
 workbox.clientsClaim();
 
-workbox.routing.registerRoute(
-    new RegExp('https://fonts.googleapis.com'),
-    workbox.strategies.staleWhileRevalidate()
-);
-workbox.routing.registerRoute(
-    new RegExp('https://maps.googleapis.com'),
-    workbox.strategies.staleWhileRevalidate()
-);
-workbox.routing.registerRoute(
-    new RegExp('https://maps.gstatic.com'),
-    workbox.strategies.staleWhileRevalidate()
-);
-workbox.routing.registerRoute(
-    new RegExp('http://localhost:3000/(.*)'),
-    workbox.strategies.staleWhileRevalidate()
-);
-
-workbox.routing.registerRoute(/\.(?:png|gif|jpg|jpeg|webp)$/,
-    workbox.strategies.staleWhileRevalidate({
-        cacheExpiration: {
-            maxEntries: 50
-        }
-    })
-);
-
-self.addEventListener('push', (event) => {
-    const title = 'Get Started With Workbox';
-    const options = {
-        body: event.data.text()
-    };
-    event.waitUntil(self.registration.showNotification(title, options));
-});
-
-workbox.precaching.precacheAndRoute([
+/**
+ * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
+ */
+self.__precacheManifest = [
   {
     "url": "css/large.css",
     "revision": "e9d6b93bdd7d90bca46e09a1edcdd649"
@@ -77,4 +62,16 @@ workbox.precaching.precacheAndRoute([
     "url": "/",
     "revision": "c0d3976444bc9bb9cab28a2141011fed"
   }
-]);
+].concat(self.__precacheManifest || []);
+workbox.precaching.suppressWarnings();
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {
+  "ignoreUrlParametersMatching": [/./]
+});
+
+workbox.routing.registerRoute(/https:\/\/fonts.googleapis.com/, workbox.strategies.staleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/https:\/\/fonts.googleapis.com/, workbox.strategies.staleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/https:\/\/maps.googleapis.com/, workbox.strategies.staleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/https:\/\/maps.gstatic.com/, workbox.strategies.staleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/http:\/\/localhost:3000\/(.*)/, workbox.strategies.staleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/\.(?:js|css)$/, workbox.strategies.staleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/\.(?:png|gif|jpg|jpeg|webp)$/, workbox.strategies.staleWhileRevalidate(), 'GET');

@@ -118,6 +118,61 @@ gulp.task('lint', () => {
 });
 
 gulp.task('generate-service-worker', () => {
+    return workbox.generateSW({
+        globDirectory: dist,
+        globPatterns: [
+            '**/*.{html,json,js,css}'
+        ],
+        templatedUrls: {
+            '/': ['index.html']
+        },
+        swDest: `${dist}/sw.js`,
+        clientsClaim: true,
+        skipWaiting: true,
+        ignoreUrlParametersMatching: [/./],
+        runtimeCaching: [{
+            urlPattern: new RegExp('https://fonts.googleapis.com'),
+            handler: 'staleWhileRevalidate'
+            },
+            {
+                urlPattern: new RegExp('https://fonts.googleapis.com'),
+                handler: 'staleWhileRevalidate'
+            },
+            {
+                urlPattern: new RegExp('https://maps.googleapis.com'),
+                handler: 'staleWhileRevalidate'
+            },
+            {
+                urlPattern: new RegExp('https://maps.gstatic.com'),
+                handler: 'staleWhileRevalidate'
+            },
+            {
+                urlPattern: new RegExp('http://localhost:3000/(.*)'),
+                handler: 'staleWhileRevalidate'
+            },
+            {
+                urlPattern: /\.(?:js|css)$/,
+                handler: 'staleWhileRevalidate'
+            },
+            {
+                urlPattern: /\.(?:png|gif|jpg|jpeg|webp)$/,
+                handler: 'staleWhileRevalidate'
+            }
+        ]
+
+
+    }).then(({warnings}) => {
+        // In case there are any warnings from workbox-build, log them.
+        for (const warning of warnings) {
+            console.warn(warning);
+        }
+        console.info('Service worker generation completed.');
+    }).catch((error) => {
+        console.warn('Service worker generation failed:', error);
+    });
+});
+
+gulp.task('generate-service-worker-manifest', () => {
     return workbox.injectManifest({
         globDirectory: dist,
         globPatterns: [
@@ -127,7 +182,8 @@ gulp.task('generate-service-worker', () => {
             '/': ['index.html']
         },
         swDest: `${dist}/sw.js`,
-        swSrc: `${src}/sw.js`
+        swSrc: `${src}/sw.js`,
+
     }).then(({warnings}) => {
         // In case there are any warnings from workbox-build, log them.
         for (const warning of warnings) {
