@@ -10,12 +10,13 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337;
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}/`;
   }
 
   static dbPromise() {
       return idb.open('restaurantReview', 1, upgradeDb => {
-          upgradeDb.createObjectStore('restaurants', {keyPath: 'id'})
+          upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+          upgradeDb.createObjectStore('reviews', {keyPath: 'id'})
       });
   }
 
@@ -23,7 +24,7 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-      fetch(DBHelper.DATABASE_URL)
+      fetch(DBHelper.DATABASE_URL + "restaurants")
           .then(response => response.json())
           .then(restaurants => {
               this.saveRestaurantDataLocally(restaurants);
@@ -32,19 +33,43 @@ class DBHelper {
           .catch(
               error => {
                   console.log('Dit is de fout' + error);
-                  this.getAllDataLocally()
+                  this.getAllRestaurantsLocally()
                       .then(restaurants =>
                   callback(null, restaurants))
               }
           );
   }
 
-  static getAllDataLocally() {
+  static fetchReviews(callback){
+      fetch(DBHelper.DATABASE_URL + "reviews")
+          .then(response => response.json())
+          .then(reviews => {
+              this.saveReviewDataLocally(reviews);
+              callback(null, reviews);
+          })
+          .catch(
+              error => {
+                  console.log('Dit is de reviews error' + error);
+                  this.getAllReviewsLocally()
+                      .then(reviews =>
+                          callback(null, reviews))
+              }
+          );
+  }
+
+  static getAllRestaurantsLocally() {
       return DBHelper.dbPromise().then(db => {
           return db.transaction('restaurants')
               .objectStore('restaurants').getAll();
       })
   }
+
+    static getAllReviewsLocally() {
+        return DBHelper.dbPromise().then(db => {
+            return db.transaction('restaurants')
+                .objectStore('restaurants').getAll();
+        })
+    }
 
     static saveRestaurantDataLocally(restaurants) {
         if (!('indexedDB' in window)) {return null;}
@@ -52,6 +77,19 @@ class DBHelper {
             const tx = db.transaction('restaurants', 'readwrite');
             const store = tx.objectStore('restaurants');
             return Promise.all(restaurants.map(restaurant => store.put(restaurant)))
+                .catch(() => {
+                    tx.abort();
+                    throw Error('Events were not added to the store');
+                });
+        });
+    }
+
+    static saveReviewDataLocally(reviews) {
+        if (!('indexedDB' in window)) {return null;}
+        return DBHelper.dbPromise().then(db => {
+            const tx = db.transaction('reviews', 'readwrite');
+            const store = tx.objectStore('reviews');
+            return Promise.all(reviews.map(review => store.put(review)))
                 .catch(() => {
                     tx.abort();
                     throw Error('Events were not added to the store');
@@ -127,13 +165,26 @@ class DBHelper {
         callback(error, null);
       } else {
         // Get all cuisines from all restaurants
-        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
+        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type);
         // Remove duplicates from cuisines
-        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
+        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i);
         callback(null, uniqueCuisines);
       }
     });
   }
+
+    static fetchReviewsByRestaurantId(id) {
+        fetch(DBHelper.DATABASE_URL + "reviews/?restaurant_id=" + id)
+            .then(response => response.json())
+            .catch(
+                error => {
+                    console.log('Dit is de fout' + error);
+                    // this.getAllDataLocally()
+                    //     .then(reviews =>
+                    //         callback(null, reviews))
+                }
+            );
+    }
 
   /**
    * Restaurant page URL.
@@ -153,14 +204,18 @@ class DBHelper {
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {
-    const marker = new google.maps.Marker({
-      position: restaurant.latlng,
-      title: restaurant.name,
-      url: DBHelper.urlForRestaurant(restaurant),
-      map: map,
-      animation: google.maps.Animation.DROP}
+      return new google.maps.Marker({
+            position: restaurant.latlng,
+            title: restaurant.name,
+            url: DBHelper.urlForRestaurant(restaurant),
+            map: map,
+            animation: google.maps.Animation.DROP
+        }
     );
-    return marker;
+  }
+
+  static markAsFavorite(restaurant){
+
   }
 }
 

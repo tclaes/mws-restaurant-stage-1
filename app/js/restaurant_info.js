@@ -4,7 +4,6 @@ import LazyLoad from './lazyload.min';
 let restaurant;
 var map;
 
-
 /**
  * Initialize Google map, called from HTML.
  */
@@ -44,6 +43,7 @@ const fetchRestaurantFromURL = (callback) => {
         return;
       }
       fillRestaurantHTML();
+      fetchReviews(id);
       callback(null, restaurant)
     });
   }
@@ -112,10 +112,15 @@ const fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hour
   }
 };
 
+const fetchReviews = (id) => {
+    console.log(DBHelper.fetchReviewsByRestaurantId(id));
+  DBHelper.fetchReviewsByRestaurantId(id);
+};
+
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-const fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+const fillReviewsHTML = (reviews = self.reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -132,7 +137,7 @@ const fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
-}
+};
 
 /**
  * Create review HTML and add it to the webpage.
@@ -144,7 +149,7 @@ const createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = review.createdAt;
   li.appendChild(date);
 
   const rating = document.createElement('p');

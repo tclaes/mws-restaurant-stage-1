@@ -137,7 +137,6 @@ import LazyLoad from './lazyload.min';
     fillRestaurantsHTML = (restaurants = self.restaurants) => {
         const ul = document.getElementById('restaurants-list');
         restaurants.forEach(restaurant => {
-
             ul.append(createRestaurantHTML(restaurant));
         });
         addMarkersToMap();
@@ -188,6 +187,14 @@ import LazyLoad from './lazyload.min';
         more.href = DBHelper.urlForRestaurant(restaurant);
         li.append(more);
 
+        const favorite  = document.createElement('div');
+        favorite.setAttribute('id', 'favorite');
+        favorite.innerHTML =` 
+            <i class='fas fa-star'></i>
+        `;
+
+        li.append(favorite);
+
         li.onload = new LazyLoad;
 
         return li
@@ -206,3 +213,14 @@ import LazyLoad from './lazyload.min';
             // self.markers.push(marker);
         });
     };
+
+    document.addEventListener('click', e =>{
+        toggleFavorite(e)
+    })
+
+    /**
+    * Add as favorite restaurant
+    */
+    const toggleFavorite = (restaurant) => {
+        e.target.setAttribute('style', 'color: yellow');
+    }

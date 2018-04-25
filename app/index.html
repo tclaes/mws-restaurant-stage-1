@@ -83,6 +83,11 @@
   <link rel="stylesheet" href="./css/large.css" media="screen and (min-width:900px)">
   <link rel="stylesheet" href="./css/medium.css" media="screen and (min-width:450px)">
   <link rel="manifest" href="manifest.json">
+
+  <!--Scripts-->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+
+
   <!--<script defer src="js/lazyload.min.js"></script>-->
   <title>Restaurant Reviews</title>
 </head>
@@ -120,7 +125,7 @@
       if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
               navigator.serviceWorker.register('/sw.js').then(registration => {
-                  console.log('SW registered: ', registration);
+                  // console.log('SW registered: ', registration);
                   registration.pushManager.subscribe({userVisibleOnly: true});
               }).catch(registrationError => {
                   console.log('SW registration failed: ', registrationError);

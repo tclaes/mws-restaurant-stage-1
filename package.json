@@ -4,7 +4,6 @@
   "description": "---\r #### _Three Stage Course Material Project - Restaurant Reviews_ Stage 1",
   "main": "main.js",
   "devDependencies": {
-    "ajv": "^6.4.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -45,7 +44,7 @@
     "workbox-build": "^3.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "gulp": "gulp"
   },
   "author": "",
   "license": "ISC"
