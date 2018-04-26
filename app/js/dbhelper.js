@@ -116,6 +116,42 @@ class DBHelper {
     });
   }
 
+    /**
+     * Fetch reviews by restaurant_id
+     */
+
+    static fetchReviewsByRestaurantId(id, callback) {
+        // fetch all reviews with proper error handling.
+        // DBHelper.fetchReviews((error, reviews)=> {
+        //     if(error){
+        //         callback(error, null);
+        //     } else {
+        //         const restaurantReviews = reviews.filter(r => r.restaurant_id == id);
+        //         if(restaurantReviews) {
+        //             callback(null, restaurantReviews)
+        //         } else {
+        //             callback('No reviews for this restaurant yet', null);
+        //         }
+        //     }
+        // })
+
+        fetch(DBHelper.DATABASE_URL + "reviews/?restaurant_id="+id)
+            .then(response => response.json())
+            .then(reviews => {
+                this.saveReviewDataLocally(reviews);
+                callback(null, reviews);
+            })
+            .catch(
+                error => {
+                    console.log('Dit is de reviews error' + error);
+                    this.getAllReviewsLocally()
+                        .then(reviews =>
+                            callback(null, reviews))
+                }
+            );
+
+    }
+
   /**
    * Fetch restaurants by a cuisine and a neighborhood with proper error handling.
    */
@@ -172,19 +208,6 @@ class DBHelper {
       }
     });
   }
-
-    static fetchReviewsByRestaurantId(id) {
-        fetch(DBHelper.DATABASE_URL + "reviews/?restaurant_id=" + id)
-            .then(response => response.json())
-            .catch(
-                error => {
-                    console.log('Dit is de fout' + error);
-                    // this.getAllDataLocally()
-                    //     .then(reviews =>
-                    //         callback(null, reviews))
-                }
-            );
-    }
 
   /**
    * Restaurant page URL.

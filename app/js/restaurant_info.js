@@ -16,12 +16,18 @@ window.initMap = () => {
         zoom: 16,
         center: restaurant.latlng,
         scrollwheel: false
-      });
+      })
+
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
-}
+    fetchReviewsFromURL((error, reviews) => {
+      if(error){
+        console.error(error);
+      }
+    });
+};
 
 /**
  * Get current restaurant from page URL.
@@ -43,11 +49,12 @@ const fetchRestaurantFromURL = (callback) => {
         return;
       }
       fillRestaurantHTML();
-      fetchReviews(id);
       callback(null, restaurant)
     });
   }
 };
+
+
 
 /**
  * Create restaurant HTML and add it to the webpage
@@ -88,8 +95,6 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
 };
 
 /**
@@ -112,9 +117,29 @@ const fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hour
   }
 };
 
-const fetchReviews = (id) => {
-    console.log(DBHelper.fetchReviewsByRestaurantId(id));
-  DBHelper.fetchReviewsByRestaurantId(id);
+/**
+ * Get current restaurant from page URL.
+ */
+const fetchReviewsFromURL = (callback) => {
+    if (self.reviews) { // restaurant already fetched!
+        callback(null, self.reviews);
+        return;
+    }
+    const id = getParameterByName('id');
+    if (!id) { // no id found in URL
+        error = 'No restaurant id in URL';
+        callback(error, null);
+    } else {
+        DBHelper.fetchReviewsByRestaurantId(id, (error, reviews) => {
+            self.reviews = reviews;
+            if (!reviews) {
+                console.error(error);
+                return;
+            }
+            fillReviewsHTML();
+            callback(null, reviews)
+        });
+    }
 };
 
 /**
@@ -126,12 +151,6 @@ const fillReviewsHTML = (reviews = self.reviews) => {
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
-  if (!reviews) {
-    const noReviews = document.createElement('p');
-    noReviews.innerHTML = 'No reviews yet!';
-    container.appendChild(noReviews);
-    return;
-  }
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));
