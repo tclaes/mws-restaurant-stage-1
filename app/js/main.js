@@ -188,7 +188,7 @@ import LazyLoad from './lazyload.min';
         li.append(more);
 
         const favorite  = document.createElement('div');
-        favorite.setAttribute('id', 'favorite');
+        favorite.setAttribute('id', restaurant.id);
         favorite.innerHTML =` 
             <i class='fas fa-star'></i>
         `;
@@ -221,6 +221,9 @@ import LazyLoad from './lazyload.min';
     /**
     * Add as favorite restaurant
     */
-    const toggleFavorite = (restaurant) => {
+    const toggleFavorite = (e) => {
+        const restaurant = e.target.parentElement.parentElement;
+        console.log(restaurant.id);
+        DBHelper.setFavorite(restaurant.id);
         e.target.setAttribute('style', 'color: yellow');
     }

@@ -121,20 +121,6 @@ class DBHelper {
      */
 
     static fetchReviewsByRestaurantId(id, callback) {
-        // fetch all reviews with proper error handling.
-        // DBHelper.fetchReviews((error, reviews)=> {
-        //     if(error){
-        //         callback(error, null);
-        //     } else {
-        //         const restaurantReviews = reviews.filter(r => r.restaurant_id == id);
-        //         if(restaurantReviews) {
-        //             callback(null, restaurantReviews)
-        //         } else {
-        //             callback('No reviews for this restaurant yet', null);
-        //         }
-        //     }
-        // })
-
         fetch(DBHelper.DATABASE_URL + "reviews/?restaurant_id="+id)
             .then(response => response.json())
             .then(reviews => {
@@ -223,7 +209,44 @@ class DBHelper {
     return (`/images/${restaurant.id}`);
   }
 
-  /**
+  static setFavorite(restaurant){
+      fetch(DBHelper.DATABASE_URL + "restaurants/" + restaurant)
+          .then(response => response.json())
+          .then(response => {
+              console.log(response.is_favorite);
+              if(response.is_favorite){
+                  this.favoriteRestaurant(response.id)
+              } else {
+                  this.unfavoriteRestaurant(response.id)
+              }
+          }
+
+      )
+  }
+
+    /**
+     *  Favorite a restaurant
+     */
+    static favoriteRestaurant(restaurant_id) {
+        fetch (DBHelper.DATABASE_URL + "restaurants/" + restaurant_id + "/?is_favorite=true", {
+            method: 'put'
+        })
+            .then(response => console.log("restaurant favorited"))
+    }
+
+    /**
+     * Unfavorite a restaurant
+     */
+
+    static unfavoriteRestaurant(restaurant_id) {
+        fetch (DBHelper.DATABASE_URL + "restaurants/" + restaurant_id + "/?is_favorite=false", {
+            method: 'put'
+        })
+            .then(response => console.log('Restaurant unfavorited'))
+    }
+
+
+    /**
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {

@@ -44,11 +44,11 @@ self.__precacheManifest = [
   },
   {
     "url": "js/main.min.js",
-    "revision": "faa6ec39aba3dfd93cd81c4293c98e35"
+    "revision": "bbf30e6fbafa65170290f63073a733ae"
   },
   {
     "url": "js/restaurant.min.js",
-    "revision": "f50ac7058417727d3ce42895f62415fb"
+    "revision": "aeb65fcbf91ec63d97ead8a2b5777272"
   },
   {
     "url": "manifest.json",
