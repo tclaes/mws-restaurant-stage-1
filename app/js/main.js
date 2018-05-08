@@ -11,9 +11,21 @@ import LazyLoad from './lazyload.min';
      */
 
     document.addEventListener('DOMContentLoaded', () => {
+        loadCSS();
         fetchNeighborhoods();
         fetchCuisines();
+
     });
+
+    const loadCSS = () =>{
+        let fontawesome = document.createElement('link');
+        fontawesome.rel = 'stylesheet';
+        fontawesome.href = 'https://use.fontawesome.com/releases/v5.0.12/css/all.css';
+        fontawesome.integrity='sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9';
+        fontawesome.crossOrigin = 'anonymous'
+        let godefer = document.getElementsByTagName('link')[0];
+        godefer.parentNode.insertBefore(fontawesome, godefer);
+    };
 
     const /**
      * Fetch all neighborhoods and set their HTML.
@@ -88,10 +100,11 @@ import LazyLoad from './lazyload.min';
                     scrollwheel: false
                 });
                 self.map.addListener('tilesloaded', setMapTitle);
+                updateRestaurants();
             }
         }
 
-        updateRestaurants();
+
     };
 
     const setMapTitle = () => {

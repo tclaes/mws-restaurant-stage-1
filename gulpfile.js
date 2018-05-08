@@ -216,6 +216,8 @@ gulp.task('generate-manifest',() => {
 gulp.task('serve',() =>{
     browserSync.init({
         server: './dist',
+        // httpModule: 'http2',
+        // https: true,
         files: ['./dist/*.html', './dist/css/*.css', './dist/js/*.js']
         }, function (err, bs) {
             bs.addMiddleware("*",  require('connect-gzip-static')('./dist'), {
