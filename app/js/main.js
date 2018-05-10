@@ -193,7 +193,7 @@ import LazyLoad from './lazyload.min';
             <p>Favorite</p>
         `;
 
-        if(restaurant.is_favorite){
+        if(restaurant.is_favorite == 'true'){
             console.log('Initial load: '+ restaurant.id + ' = ' + restaurant.is_favorite);
             favorite.setAttribute('style', 'color: yellow; font-weight: bold');
         } else {
@@ -202,13 +202,13 @@ import LazyLoad from './lazyload.min';
 
         favorite.addEventListener('click', () => {
             console.log("fetch: " + DBHelper.fetchFavorite(restaurant.id));
-            if(restaurant.is_favorite){
+            if(restaurant.is_favorite == 'true'){
                 console.log('Unfavorite');
-                restaurant.is_favorite = false;
+                restaurant.is_favorite = 'false';
                 DBHelper.unfavoriteRestaurant(restaurant.id);
                 favorite.setAttribute('style', 'color: black');
             } else {
-                restaurant.is_favorite = true;
+                restaurant.is_favorite = 'true';
                 DBHelper.favoriteRestaurant(restaurant.id);
                 favorite.setAttribute('style', 'color: yellow; font-weight: bold');
             }

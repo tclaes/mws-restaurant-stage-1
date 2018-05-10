@@ -44,7 +44,6 @@ gulp.task('css', () => {
         .pipe(cssNano())
         .pipe(cleanCss())
         .pipe(sourcemaps.write())
-        .pipe(gzip())
         .pipe(gulp.dest('./dist/css'));
 });
 
@@ -55,24 +54,13 @@ gulp.task('html', () =>{
         collapseWhitespace: true
         }))
        .pipe(sourcemaps.write())
-       .pipe(gzip())
        .pipe(gulp.dest(dist));
 });
 
-gulp.task('copy_html', () => {
-    return gulp.src('app/**/*.html')
-        .pipe(gulp.dest(dist))
-});
-
-gulp.task('copy_css', () => {
-     return gulp.src('app/css/*.css')
-         .pipe(gulp.dest('./dist/css'));
-});
-
 gulp.task('gzip', () => {
-    gulp.src(['app/js/main.min.js','app/js/restaurant.min.js'])
+    gulp.src(['!app/sw.js','app/**/*.+(html|css)'])
         .pipe(gzip())
-        .pipe(gulp.dest('./dist/js'));
+        .pipe(gulp.dest(dist))
 });
 
 
@@ -236,7 +224,7 @@ gulp.task('browserify', function () {
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest('./app/js'))
+        .pipe(gulp.dest('./dist/js'))
 });
 
 gulp.task('restaurant_info', function () {
@@ -249,16 +237,14 @@ gulp.task('restaurant_info', function () {
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest('./app/js'))
+        .pipe(gulp.dest('./dist/js'))
 });
 
 
 gulp.task('default',['clean','watch'], ()=>{
     runSequence([
         'css',
-        'copy_css',
         'html',
-        'copy_html',
         'responsive',
         'image-min',
         'webp',
