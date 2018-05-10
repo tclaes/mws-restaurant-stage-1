@@ -121,6 +121,7 @@ class DBHelper {
      */
 
     static fetchReviewsByRestaurantId(id, callback) {
+
         fetch(DBHelper.DATABASE_URL + "reviews/?restaurant_id="+id)
             .then(response => response.json())
             .then(reviews => {
@@ -209,19 +210,13 @@ class DBHelper {
     return (`/images/${restaurant.id}`);
   }
 
-  static setFavorite(restaurant){
+  static fetchFavorite(restaurant){
       fetch(DBHelper.DATABASE_URL + "restaurants/" + restaurant)
-          .then(response => response.json())
+          .then (response => response.json())
           .then(response => {
-              console.log(response.is_favorite);
-              if(response.is_favorite){
-                  this.favoriteRestaurant(response.id)
-              } else {
-                  this.unfavoriteRestaurant(response.id)
-              }
-          }
-
-      )
+              console.log("Fetch: " + response.is_favorite);
+              return response.is_favorite;
+          })
   }
 
     /**
@@ -260,9 +255,6 @@ class DBHelper {
     );
   }
 
-  static markAsFavorite(restaurant){
-
-  }
 }
 
 export default DBHelper;

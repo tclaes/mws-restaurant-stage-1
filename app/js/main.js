@@ -1,7 +1,7 @@
 import DBHelper from './dbhelper';
 import LazyLoad from './lazyload.min';
 
-    const markers = [];
+    var markers = [];
     let neighborhoods;
     let cuisines;
     let restaurants;
@@ -11,21 +11,9 @@ import LazyLoad from './lazyload.min';
      */
 
     document.addEventListener('DOMContentLoaded', () => {
-        loadCSS();
         fetchNeighborhoods();
         fetchCuisines();
-
     });
-
-    const loadCSS = () =>{
-        let fontawesome = document.createElement('link');
-        fontawesome.rel = 'stylesheet';
-        fontawesome.href = 'https://use.fontawesome.com/releases/v5.0.12/css/all.css';
-        fontawesome.integrity='sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9';
-        fontawesome.crossOrigin = 'anonymous'
-        let godefer = document.getElementsByTagName('link')[0];
-        godefer.parentNode.insertBefore(fontawesome, godefer);
-    };
 
     const /**
      * Fetch all neighborhoods and set their HTML.
@@ -86,25 +74,17 @@ import LazyLoad from './lazyload.min';
      * Initialize Google map, called from HTML.
      */
     window.initMap = () => {
-        let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if(connection){
-            console.log("This is the speed:" + connection.effectiveType);
-            if(connection.effectiveType !== '3g'){
-                let loc = {
-                    lat: 40.722216,
-                    lng: -73.987501
-                };
-                self.map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 12,
-                    center: loc,
-                    scrollwheel: false
-                });
-                self.map.addListener('tilesloaded', setMapTitle);
-                updateRestaurants();
-            }
-        }
-
-
+        let loc = {
+            lat: 40.722216,
+            lng: -73.987501
+        };
+        self.map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: loc,
+            scrollwheel: false
+        });
+        self.map.addListener('tilesloaded', setMapTitle);
+        updateRestaurants();
     };
 
     const setMapTitle = () => {
@@ -173,13 +153,13 @@ import LazyLoad from './lazyload.min';
         const sourceSmall = document.createElement('source');
         sourceSmall.className = 'restaurant-img lazy';
         sourceSmall.setAttribute("data-srcset", DBHelper.imageUrlForRestaurant(restaurant) + "_small.webp");
-        sourceSmall.setAttribute("media", "(min-width: 400px)");
+        sourceSmall.setAttribute("media", "(min-width: 400px)")
         picture.append(sourceSmall);
 
         const sourceLarge = document.createElement('source');
         sourceLarge.className = 'restaurant-img lazy';
         sourceLarge.setAttribute("data-srcset", DBHelper.imageUrlForRestaurant(restaurant) + "_large.webp");
-        sourceLarge.setAttribute("media", "(min-width: 900px)");
+        sourceLarge.setAttribute("media", "(min-width: 900px)")
         picture.append(sourceLarge);
 
         const image = document.createElement('img');
@@ -208,10 +188,31 @@ import LazyLoad from './lazyload.min';
         li.append(more);
 
         const favorite  = document.createElement('div');
-        favorite.setAttribute('id', restaurant.id);
+        favorite.setAttribute('id', 'favorite');
         favorite.innerHTML =` 
-            <i class='fas fa-star'></i>
+            <p>Favorite</p>
         `;
+
+        if(restaurant.is_favorite){
+            console.log('Initial load: '+ restaurant.id + ' = ' + restaurant.is_favorite);
+            favorite.setAttribute('style', 'color: yellow; font-weight: bold');
+        } else {
+            favorite.removeAttribute('style');
+        }
+
+        favorite.addEventListener('click', () => {
+            console.log("fetch: " + DBHelper.fetchFavorite(restaurant.id));
+            if(restaurant.is_favorite){
+                console.log('Unfavorite');
+                restaurant.is_favorite = false;
+                DBHelper.unfavoriteRestaurant(restaurant.id);
+                favorite.setAttribute('style', 'color: black');
+            } else {
+                restaurant.is_favorite = true;
+                DBHelper.favoriteRestaurant(restaurant.id);
+                favorite.setAttribute('style', 'color: yellow; font-weight: bold');
+            }
+        })
 
         li.append(favorite);
 
@@ -233,17 +234,3 @@ import LazyLoad from './lazyload.min';
             // self.markers.push(marker);
         });
     };
-
-    // document.addEventListener('click', e =>{
-    //     toggleFavorite(e)
-    // })
-
-    /**
-    * Add as favorite restaurant
-    */
-    // const toggleFavorite = (e) => {
-    //     const restaurant = e.target.parentElement.parentElement;
-    //     console.log(restaurant.id);
-    //     DBHelper.setFavorite(restaurant.id);
-    //     e.target.setAttribute('style', 'color: yellow');
-    // }
