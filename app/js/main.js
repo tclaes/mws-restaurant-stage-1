@@ -74,17 +74,25 @@ import LazyLoad from './lazyload.min';
      * Initialize Google map, called from HTML.
      */
     window.initMap = () => {
-        let loc = {
-            lat: 40.722216,
-            lng: -73.987501
-        };
-        self.map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: loc,
-            scrollwheel: false
-        });
-        self.map.addListener('tilesloaded', setMapTitle);
-        updateRestaurants();
+        let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if(connection){
+            console.log("This is the speed:" + connection.effectiveType);
+            if(connection.effectiveType !== '3g'){
+                let loc = {
+                    lat: 40.722216,
+                    lng: -73.987501
+                };
+                self.map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 12,
+                    center: loc,
+                    scrollwheel: false
+                });
+                self.map.addListener('tilesloaded', setMapTitle);
+                updateRestaurants();
+            }
+        }
+
+
     };
 
     const setMapTitle = () => {
