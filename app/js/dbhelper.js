@@ -203,6 +203,10 @@ class DBHelper {
     return (`./restaurant.html?id=${restaurant.id}`);
   }
 
+    static reviewRestaurant(restaurant) {
+        return (`./review.html?id=${restaurant.id}`);
+    }
+
   /**
    * Restaurant image URL.
    */
@@ -255,6 +259,15 @@ class DBHelper {
     );
   }
 
+
+    static postReview(review) {
+      fetch('http://localhost:1337/reviews/', {
+          method: 'post',
+          body: JSON.stringify(review)
+      })
+          .then(response => response.json())
+
+    }
 }
 
 export default DBHelper;

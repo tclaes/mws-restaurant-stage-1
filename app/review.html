@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- Normalize.scss for better cross-browser consistency -->
+    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        a {
+            color: orange;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        #maincontent {
+            background-color: #f3f3f3;
+            display: flex;
+            flex-direction: column;
+        }
+        #footer {
+            background-color: #444;
+            color: white;
+            letter-spacing: 1px;
+            padding: 25px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* ====================== Map ====================== */
+        #map {
+            height: 200px;
+        }
+
+        /* ====================== Navigation ====================== */
+        nav {
+            height: 80px;
+            background-color: #252831;
+            text-align:center;
+            display: flex;
+            align-items: center;
+            justify-content: center;}
+
+        nav a {
+            font-weight: 200;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+        }
+
+        /**
+    *Lazy loading
+    **/
+
+        img:not([src]):not([srcset]) {
+            visibility: hidden;
+        }
+
+    </style>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/restaurant_info.css">
+    <link rel="stylesheet" href="./css/large.css" media="screen and (min-width:900px)">
+    <link rel="stylesheet" href="./css/medium.css" media="screen and (min-width:450px)">
+    <link rel="manifest" href="manifest.json">
+    <title>Review a restaurant</title>
+</head>
+
+<body class="inside">
+<!-- Beginning header -->
+<header>
+    <!-- Beginning nav -->
+    <nav>
+        <h1>
+            <a href="index.html">Restaurant Reviews</a>
+        </h1>
+    </nav>
+    <!-- End nav -->
+</header>
+<!-- End header -->
+<!-- Beginning main -->
+<main id="maincontent" role="main">
+    <!-- Beginning breadcrumb -->
+
+    <ul id="breadcrumb" aria-label="Breadcrumb" role="navigation">
+        <li>
+            <a href="index.html">Home</a>
+        </li>
+    </ul>
+
+    <!-- End breadcrumb -->
+    <!-- Beginning restaurant -->
+    <section id="restaurant-container">
+        <h2 id="restaurant-name" tabindex="0"></h2>
+        <picture id="restaurant-img"></picture>
+        <p id="restaurant-cuisine" tabindex="0"></p>
+        <p id="restaurant-address" tabindex="0"></p>
+        <form id="restaurant-review" tabindex="0">
+
+        </form>
+    </section>
+    <!-- end restaurant -->
+    <!-- Beginning reviews -->
+    <section id="reviews-container">
+        <ul id="reviews-list" tabindex="0"></ul>
+    </section>
+    <!-- End reviews -->
+    <footer id="footer">
+        Copyright (c) 2017
+        <a href="/">
+            <strong>Restaurant Reviews</strong>
+        </a> All Rights Reserved.
+    </footer>
+</main>
+<!-- End main -->
+<!-- Beginning map -->
+<section id="map-container">
+    <div id="map" role="application"></div>
+</section>
+<!-- End map -->
+<!-- Beginning footer -->
+
+<!-- End footer -->
+
+<!-- Beginning scripts -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+                console.log('SW registered: ', registration);
+                registration.pushManager.subscribe({userVisibleOnly: true});
+            }).catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+        });
+    }
+</script>
+<script type="application/javascript" charset="utf-8" src="js/review.min.js"></script>
+<!-- Google Maps -->
+<script async defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_fEJIMis9lXn5Iz3WR6E5IjnCIdIRnM&libraries=places&callback=initMap"></script>
+<!-- End scripts -->
+</body>
+</html>

@@ -187,6 +187,11 @@ import LazyLoad from './lazyload.min';
         more.href = DBHelper.urlForRestaurant(restaurant);
         li.append(more);
 
+        const review = document.createElement('a');
+        review.innerHTML = 'Add review';
+        review.href = DBHelper.reviewRestaurant(restaurant);
+        li.append(review)
+
         const favorite  = document.createElement('div');
         favorite.setAttribute('id', 'favorite');
         favorite.innerHTML =` 

@@ -44,11 +44,15 @@ self.__precacheManifest = [
   },
   {
     "url": "js/main.min.js",
-    "revision": "42d3f91d92cbba6c94a1a9ef6a43c12b"
+    "revision": "6ed9a3eac15f6d11b5199dc473e51b1b"
   },
   {
     "url": "js/restaurant.min.js",
-    "revision": "a81b23ffe69c78890016e90b35528050"
+    "revision": "cdddfdb28b9478ce12a7ee79c938e6bb"
+  },
+  {
+    "url": "js/review.min.js",
+    "revision": "49f60a9a72d83d457b79f0812b8ec9f9"
   },
   {
     "url": "manifest.json",
@@ -56,7 +60,11 @@ self.__precacheManifest = [
   },
   {
     "url": "restaurant.html",
-    "revision": "9ce086cf33f1bb39366698360ff18bd1"
+    "revision": "d5194b6ba06c7a704dfad1577c91693c"
+  },
+  {
+    "url": "review.html",
+    "revision": "ff16b9bdf9434aba5d975753f9f551f9"
   },
   {
     "url": "/",

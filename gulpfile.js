@@ -240,6 +240,19 @@ gulp.task('restaurant_info', function () {
         .pipe(gulp.dest('./dist/js'))
 });
 
+gulp.task('add_review', function () {
+    // app.js is your main JS file with all your module inclusions
+    return browserify(['./app/js/add_review.js'])
+        .transform("babelify", { presets: ["es2015"] })
+        .bundle()
+        .pipe(source('review.min.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./dist/js'))
+});
+
 
 gulp.task('default',['clean','watch'], ()=>{
     runSequence([
@@ -249,7 +262,7 @@ gulp.task('default',['clean','watch'], ()=>{
         'image-min',
         'webp',
         'generate-manifest'
-        ],'browserify', 'restaurant_info','gzip','generate-service-worker', 'serve');
+        ],'browserify', 'restaurant_info', 'add_review','gzip','generate-service-worker', 'serve');
 });
 
 gulp.task('watch', ()=>{
