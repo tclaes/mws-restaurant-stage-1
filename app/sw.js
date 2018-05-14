@@ -1,6 +1,15 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
 
+const bgSyncPlugin = new workbox.backgroundSync.Plugin('review-queue');
+const networkWithBackgroundSync = new workbox.strategies.NetworkOnly({
+    plugins: [bgSyncPlugin],
+});
 
+workbox.routing.registerRoute(
+    'http://localhost:1337/reviews/',
+    networkWithBackgroundSync,
+    'POST'
+);
 
 workbox.skipWaiting();
 workbox.clientsClaim();
